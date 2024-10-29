@@ -1,9 +1,17 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
+import { useRouter } from 'next/navigation'
 import { UserCircle } from "lucide-react"
 
 export default function Welcome() {
+  const router = useRouter()
+
+  const myCourses = (e: React.FormEvent) => {
+    e.preventDefault()
+    router.push('/courses')
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-md space-y-8">
@@ -15,7 +23,7 @@ export default function Welcome() {
           <Button variant="outline" className="w-full flex items-center justify-center">
             <span className="mr-2">🔍</span> Class Search
           </Button>
-          <Button variant="outline" className="w-full flex items-center justify-center">
+          <Button variant="outline" className="w-full flex items-center justify-center" onClick={myCourses}>
             <span className="mr-2">📚</span> My Courses
           </Button>
           <Button variant="outline" className="w-full flex items-center justify-center">
