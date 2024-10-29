@@ -164,6 +164,7 @@ function CourseDropdown({ course }: { course: Course }) {
 
 export default function CourseList() {
   return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4"> </div>
     // <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
     //   <header className="flex justify-between items-center p-4 bg-white">
     //     <Button variant="ghost" size="icon">
