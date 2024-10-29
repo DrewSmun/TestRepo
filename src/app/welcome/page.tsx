@@ -15,13 +15,13 @@ export default function Welcome() {
           You can register for classes on OCTOBER 29
         </p>
         <div className="space-y-4">
-          <Button variant="outline" className="w-full flex items-center justify-center">
+          <Button variant="outline" className="w-full flex items-center justify-center" onClick={() => router.push('/search')}>
             <span className="mr-2">🔍</span> Class Search
           </Button>
           <Button variant="outline" className="w-full flex items-center justify-center" onClick={() => router.push('/courses')}>
             <span className="mr-2">📚</span> My Courses
           </Button>
-          <Button variant="outline" className="w-full flex items-center justify-center">
+          <Button variant="outline" className="w-full flex items-center justify-center" onClick={() => router.push('/schedule')}>
             <span className="mr-2">📅</span> Schedule
           </Button>
         </div>
