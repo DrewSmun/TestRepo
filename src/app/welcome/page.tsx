@@ -18,7 +18,7 @@ export default function Welcome() {
           <Button variant="outline" className="w-full flex items-center justify-center">
             <span className="mr-2">🔍</span> Class Search
           </Button>
-          <Button variant="outline" className="w-full flex items-center justify-center" onClick={() => router.push('/courses.tsx')}>
+          <Button variant="outline" className="w-full flex items-center justify-center" onClick={() => router.push('/courses')}>
             <span className="mr-2">📚</span> My Courses
           </Button>
           <Button variant="outline" className="w-full flex items-center justify-center">
