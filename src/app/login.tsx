@@ -32,7 +32,7 @@ export default function Login() {
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
           <Input
             type="email"
-            placeholder="Email"
+            placeholder="Testing"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
