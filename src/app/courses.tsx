@@ -25,9 +25,6 @@ export default function Courses() {
             </Button>
           </div>
         </div>
-        <div className="absolute bottom-4 right-4">
-          <UserCircle className="w-8 h-8 text-gray-500" />
-        </div>
       </div>
     )
   }

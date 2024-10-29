@@ -9,6 +9,8 @@ export default function Welcome() {
 
   const myCourses = (e: React.FormEvent) => {
     e.preventDefault()
+    // Here you would typically handle the login logic
+    // For this example, we'll just navigate to the welcome page
     router.push('/courses')
   }
 
@@ -30,9 +32,6 @@ export default function Welcome() {
             <span className="mr-2">📅</span> Schedule
           </Button>
         </div>
-      </div>
-      <div className="absolute bottom-4 right-4">
-        <UserCircle className="w-8 h-8 text-gray-500" />
       </div>
     </div>
   )
