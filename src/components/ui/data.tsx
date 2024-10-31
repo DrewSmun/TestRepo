@@ -17,6 +17,7 @@ export type Section = {
     professor: string
     seatsOpen: number
     seats: number
+    enrolled?: boolean
 }
 
 export type Enroll = {
