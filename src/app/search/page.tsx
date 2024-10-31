@@ -27,7 +27,7 @@ export default function FindClasses() {
   }
 
   const toResults = () => {
-    router.push('/results', { query: { subject: subject, number: courseNumber } })
+    router.push(`/results?subject=${subject}&number=${courseNumber}`)
     // setIsOverlayOpen(true)
   }
 
