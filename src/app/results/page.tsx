@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Suspense } from 'react'
+import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -58,8 +58,8 @@ function CourseDropdown({ course }: { course: Course }) {
 }
 
 export default function Results() {
-  const [courseSubject, setCourseSubject] = useState(subject)
-  const [courseNumber, setCourseNumber] = useState(number)
+  const [courseSubject, setCourseSubject] = useState('')
+  const [courseNumber, setCourseNumber] = useState('')
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
