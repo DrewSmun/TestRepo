@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, Search, ChevronDown } from 'lucide-react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/router'
+import { Link } from 'next/link'
 import React from 'react';
 // import AwesomeAlert from 'react-native-awesome-alerts';
 // import PageTransition from '../../components/meta/page-transition'
@@ -27,7 +28,10 @@ export default function FindClasses() {
   }
 
   const toResults = () => {
-    router.push(`/results?subject=${subject}&number=${courseNumber}`)
+    router.push({
+      pathname: '/results',
+      query: { subject: subject, number: courseNumber }
+    })
     // setIsOverlayOpen(true)
   }
 
