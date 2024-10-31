@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, Search, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import React from 'react';
+import { setSubject, setNumber } from '@/components/ui/global'
 // import AwesomeAlert from 'react-native-awesome-alerts';
 // import PageTransition from '../../components/meta/page-transition'
 // import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom';
@@ -12,7 +13,7 @@ export default function FindClasses() {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [showMoreOptions, setShowMoreOptions] = useState(false)
-  const [subject, setSubject] = useState('')
+  const [courseSubject, setCourseSubject] = useState('')
   const [courseNumber, setCourseNumber] = useState('')
   const [crn, setCrn] = useState('')
   const [selectedSemester, setSelectedSemester] = useState('Spring 2025')
@@ -27,8 +28,9 @@ export default function FindClasses() {
   }
 
   const toResults = () => {
-    const queryParams = new URLSearchParams({ subject: subject, number: courseNumber }).toString()
-    router.push(`/results?data=${queryParams}`)
+    setSubject(courseSubject)
+    setNumber(courseNumber)
+    router.push(`/results`)
     // setIsOverlayOpen(true)
   }
 
@@ -86,8 +88,8 @@ export default function FindClasses() {
             <input
               type="text"
               placeholder="Subject"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
+              value={courseSubject}
+              onChange={(e) => setCourseSubject(e.target.value)}
               className="w-full bg-white border border-gray-300 rounded-md py-2 px-4"
             />
             <input

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Course, Section, Courses } from "@/components/ui/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
+import { subject, number } from '@/components/ui/global'
 
 function CourseDropdown({ course }: { course: Course }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -57,9 +58,8 @@ function CourseDropdown({ course }: { course: Course }) {
 }
 
 export default function Results() {
-  const searchParams = useSearchParams()
-  const subject = searchParams.get('subject')
-  const number = searchParams.get('number')
+  const [courseSubject, setCourseSubject] = useState(subject)
+  const [courseNumber, setCourseNumber] = useState(number)
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
@@ -75,7 +75,7 @@ export default function Results() {
       <main className="p-4">
       <Suspense>
         { Courses.filter(
-          (course : Course) => ((course.subject == subject || course.subject == '') && (course.number == number || course.number == ''))
+          (course : Course) => ((course.subject == courseSubject || course.subject == '') && (course.number == courseNumber || course.number == ''))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
         )}
