@@ -4,7 +4,7 @@ import React from 'react';
 import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, Search, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { searchParams } from '@/components/ui/data'
+import searchParams from "@/components/ui/global"
 // import AwesomeAlert from 'react-native-awesome-alerts';
 // import PageTransition from '../../components/meta/page-transition'
 // import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom';

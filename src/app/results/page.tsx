@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Course, Section, Courses, searchParams } from "@/components/ui/data"
+import { Course, Section, Courses, } from "@/components/ui/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
+import searchParams from "@/components/ui/global"
 
 function CourseDropdown({ course }: { course: Course }) {
   const [isExpanded, setIsExpanded] = useState(false);
