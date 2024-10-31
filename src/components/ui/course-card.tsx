@@ -38,7 +38,7 @@ export default function CourseCard({section, days, time, location, professor, se
                     </div>
                     
                     <p className="text-xs text-gray-600 mt-1"> {time} </p>
-                    <div className="text-sm text-muted-foreground"> {professor} </div>
+                    {/* <div className="text-sm text-muted-foreground"> {professor} </div> */}
                 </div>
                 
                 {/* <div className="flex-1 flex flex-col">
