@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, Search, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/router'
-import { Link } from 'next/link'
 import React from 'react';
 // import AwesomeAlert from 'react-native-awesome-alerts';
 // import PageTransition from '../../components/meta/page-transition'
