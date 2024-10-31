@@ -24,6 +24,8 @@ export type Enroll = {
     section: string
 }
 
+export const searchParams = {subject: '', number: ''}
+
 export const Enrollment: Enroll[] = []
 
 export const Courses: Course[] = [
