@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Course, Section, Courses } from "@/data"
+import { Course, Section, Courses } from "@/components/ui/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
 
