@@ -32,7 +32,7 @@ export default function FindClasses() {
   }
 
   return (
-    <PageTransition>
+    // <PageTransition>
     <div className="min-h-screen bg-blue-100 flex flex-col">
 
       <main className="flex-grow flex flex-col">
@@ -112,7 +112,7 @@ export default function FindClasses() {
           </div>
         </div>
       </main>
-      <SlideInOverlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(false)}>
+      {/* <SlideInOverlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(false)}>
 
           <button 
             onClick={() => setIsOverlayOpen(false)}
@@ -120,8 +120,8 @@ export default function FindClasses() {
           >
             Close
           </button>
-        </SlideInOverlay>
+        </SlideInOverlay> */}
     </div>
-    </PageTransition>
+    {/* </PageTransition> */}
   )
 }
