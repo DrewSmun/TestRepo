@@ -28,8 +28,8 @@ export default function FindClasses() {
   }
 
   const toResults = () => {
-    setSubject(courseSubject)
-    setNumber(courseNumber)
+    // setSubject(courseSubject)
+    // setNumber(courseNumber)
     router.push(`/results`)
     // setIsOverlayOpen(true)
   }
