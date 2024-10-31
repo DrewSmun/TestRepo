@@ -11,10 +11,10 @@ import searchParams from "@/components/ui/global"
 
 export default function FindClasses() {
   const router = useRouter()
-  const [searchTerm, setSearchTerm] = useState(null)
+  const [searchTerm, setSearchTerm] = useState('')
   const [showMoreOptions, setShowMoreOptions] = useState(false)
-  const [courseSubject, setCourseSubject] = useState(null)
-  const [courseNumber, setCourseNumber] = useState(null)
+  const [courseSubject, setCourseSubject] = useState('')
+  const [courseNumber, setCourseNumber] = useState('')
   const [crn, setCrn] = useState('')
   const [selectedSemester, setSelectedSemester] = useState('Spring 2025')
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
