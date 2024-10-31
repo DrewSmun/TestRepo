@@ -28,7 +28,7 @@ export default function FindClasses() {
   }
 
   const toResults = () => {
-    if (searchTerm) {
+    if (searchTerm != '') {
       searchParams.subject = searchTerm.split(' ')[0]
       searchParams.number = searchTerm.split(' ')[1]
     }
