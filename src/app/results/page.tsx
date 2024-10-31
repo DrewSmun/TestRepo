@@ -73,13 +73,11 @@ export default function Results() {
         </Button>
       </header> */}
       <main className="p-4">
-      <Suspense>
         { Courses.filter(
           (course : Course) => ((course.subject == courseSubject || course.subject == '') && (course.number == courseNumber || course.number == ''))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
         )}
-      </Suspense>
       </main>
     </div>
   );
