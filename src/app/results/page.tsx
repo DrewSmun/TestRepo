@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Course, Section, Courses } from "@/components/ui/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
-import { subject, number } from '@/components/ui/global'
+import searchParams from '@/components/ui/global'
 
 function CourseDropdown({ course }: { course: Course }) {
   const [isExpanded, setIsExpanded] = useState(false);
