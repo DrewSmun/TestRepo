@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -73,11 +73,13 @@ export default function Results() {
         </Button>
       </header> */}
       <main className="p-4">
-      { Courses.filter(
+      <Suspense>
+        { Courses.filter(
           (course : Course) => ((course.subject == subject || course.subject == '') && (course.number == number || course.number == ''))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
         )}
+      </Suspense>
       </main>
     </div>
   );
