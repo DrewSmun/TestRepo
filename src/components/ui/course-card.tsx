@@ -27,21 +27,8 @@ export default function CourseCard({section, days, time, location, professor, se
       
             <div className="flex items-stretch gap-4 p-4">
                 <div className="text-4xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {section} </div>
-
-                <div>
-                    <div className="flex items-center space-x-2">
-                        <div className="flex gap-2 text-sm mb-1">
-                            { days.map((day, index) => (<span key={index} className="font-medium"> {day} </span>)) }
-                        </div>
-
-                        <p className="text-xs text-gray-600"> {location} </p>
-                    </div>
-                    
-                    <p className="text-xs text-gray-600 mt-1"> {time} </p>
-                    {/* <div className="text-sm text-muted-foreground"> {professor} </div> */}
-                </div>
                 
-                {/* <div className="flex-1 flex flex-col">
+                <div>
                     <div className="flex justify-between items-start mb-2">
                         <div className="flex gap-2 text-sm mb-1">
                             { days.map((day, index) => (<span key={index} className="font-medium"> {day} </span>)) }
@@ -52,7 +39,7 @@ export default function CourseCard({section, days, time, location, professor, se
                     
                     <div className="text-sm text-muted-foreground"> {time} </div>
                     <div className="text-sm text-muted-foreground"> {professor} </div>
-                </div> */}
+                </div>
 
                 <div className="flex flex-col justify-between items-end pl-4 border-l border-gray-200">
                     <div className="text-sm text-right mb-2"> Seats Left <br /> {seatsOpen}/{seats} </div>
