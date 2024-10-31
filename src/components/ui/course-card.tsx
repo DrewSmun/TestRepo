@@ -41,19 +41,6 @@ export default function CourseCard({section, days, time, location, professor, se
                     <div className="text-sm text-muted-foreground">{professor} </div>
                 </div>
 
-                {/* <div>
-                    <div className="flex justify-between items-start mb-2">
-                        <div className="flex gap-2 text-sm mb-1">
-                            { days.map((day, index) => (<span key={index} className="font-medium"> {day} </span>)) }
-                        </div>
-                    
-                        <div className="font-medium"> {location} </div>
-                    </div>
-                    
-                    <div className="text-sm text-muted-foreground"> {time} </div>
-                    <div className="text-sm text-muted-foreground"> {professor} </div>
-                </div> */}
-
                 <div className="flex flex-col justify-between items-end pl-4 border-l border-gray-200">
                     <div className="text-sm text-right mb-2"> Seats Left <br /> {seatsOpen}/{seats} </div>
                     <Button size="icon" className="rounded-full w-10 h-10 bg-blue-500 hover:bg-blue-600" onClick={onAdd}>
