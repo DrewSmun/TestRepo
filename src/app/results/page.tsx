@@ -50,15 +50,6 @@ function CourseDropdown({ course }: { course: Course }) {
 export default function CourseList() {
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
-      {/* <header className="flex justify-between items-center p-4 bg-white">
-        <Button variant="ghost" size="icon">
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <h1 className="text-xl font-semibold">Search Results</h1>
-        <Button variant="ghost" size="icon">
-          <ShoppingCart className="h-6 w-6" />
-        </Button>
-      </header> */}
       <main className="p-4">
         {Courses.map((course : Course) => (<CourseDropdown course={course}/>))}
       </main>
