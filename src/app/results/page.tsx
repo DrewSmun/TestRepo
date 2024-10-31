@@ -28,7 +28,7 @@ function CourseDropdown({ course }: { course: Course }) {
       <CardContent className="px-4 pb-4">
         {isExpanded && (
           <div className="mt-4 space-y-4">
-            {course.sections.map(section => (
+            {course.sections.map((section : Section) => (
               <CourseCard
                 section={section.id}
                 days={section.days}
@@ -60,7 +60,7 @@ export default function CourseList() {
         </Button>
       </header> */}
       <main className="p-4">
-        {Courses.map((course : Course) => (<CourseDropdown course={course}/>)) }
+        {Courses.map((course : Course) => (<CourseDropdown course={course}/>))}
       </main>
     </div>
   );
