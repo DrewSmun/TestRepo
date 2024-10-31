@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, Search, ChevronDown } from 'lucide-react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React from 'react';
-import AwesomeAlert from 'react-native-awesome-alerts';
-import PageTransition from '../../components/meta/page-transition'
-import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom';
+// import AwesomeAlert from 'react-native-awesome-alerts';
+// import PageTransition from '../../components/meta/page-transition'
+// import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom';
 
 export default function FindClasses() {
   const router = useRouter()
