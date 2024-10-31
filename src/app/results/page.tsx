@@ -58,8 +58,6 @@ function CourseDropdown({ course }: { course: Course }) {
 }
 
 export default function Results() {
-  const [courseSubject, setCourseSubject] = useState('')
-  const [courseNumber, setCourseNumber] = useState('')
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
@@ -74,7 +72,7 @@ export default function Results() {
       </header> */}
       <main className="p-4">
         { Courses.filter(
-          (course : Course) => ((course.subject == courseSubject || course.subject == '') && (course.number == courseNumber || course.number == ''))
+          (course : Course) => ((course.subject == searchParams.subject || course.subject == '') && (course.number == searchParams.number || course.number == ''))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
         )}
