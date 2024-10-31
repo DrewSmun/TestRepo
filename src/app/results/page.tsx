@@ -72,7 +72,7 @@ export default function Results() {
       </header> */}
       <main className="p-4">
         { Courses.filter(
-          (course : Course) => ((course.subject == searchParams.subject || course.subject == '') && (course.number == searchParams.number || course.number == ''))
+          (course : Course) => ((course.subject == searchParams.subject || searchParams.subject == '') && (course.number == searchParams.number || searchParams.number == ''))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
         )}
