@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Course, Section, Courses, } from "@/components/ui/data"
@@ -50,19 +50,17 @@ function CourseDropdown({ course }: { course: Course }) {
 }
 
 export default function Results() {
-  const params = useParams<{subject: string, course: string}>()
-
-  console.log(params.subject)
+  const searchParams = useSearchParams()
+  console.log(searchParams.get('course'))
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold text-center mb-6">{params.subject}</h1>
       <main className="p-4">
-        { Courses.filter(
+        {/* { Courses.filter(
           (course : Course) => (["any", course.subject].includes(params.subject) && ["any", course.number].includes(params.course))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
-        )}
+        )} */}
       </main>
     </div>
   );
