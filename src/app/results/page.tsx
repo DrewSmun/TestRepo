@@ -12,14 +12,6 @@ import searchParams from "@/components/ui/global"
 function CourseDropdown({ course }: { course: Course }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // const [courseFilter, setCourseFilter] = useState(Courses);
-  
-  // useEffect(() => {
-  //   Courses.filter((course) => (
-  //     (course.subject == subject) && (course.number == number || course.number == '')
-  //   ))
-  // }, [])
-
   const AddCourse = () => {}
 
   return (
@@ -57,19 +49,11 @@ function CourseDropdown({ course }: { course: Course }) {
   )
 }
 
-export default function Results() {
+export default function Results({ params }) {
+  const [parameters, setParams] = useState(params);
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
-      {/* <header className="flex justify-between items-center p-4 bg-white">
-        <Button variant="ghost" size="icon">
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <h1 className="text-xl font-semibold">Search Results</h1>
-        <Button variant="ghost" size="icon">
-          <ShoppingCart className="h-6 w-6" />
-        </Button>
-      </header> */}
       <main className="p-4">
         { Courses.filter(
           (course : Course) => ((course.subject == searchParams.subject || searchParams.subject == '') && (course.number == searchParams.number || searchParams.number == ''))
