@@ -54,6 +54,8 @@ export default function Results() {
   const subject = searchParams.get('subject')
   const number = searchParams.get('course')
 
+  console.log(`Subject: ${subject}, Course: ${number}`)
+
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
       <main className="p-4">
