@@ -1,3 +1,16 @@
+export type Account = {
+    CWID: string
+    name: string
+    email: string
+    password: string
+    rank: string
+    major: string[]
+    cart: Class[]
+    enrolled: Class[]
+    waitlist: Class[]
+    taken: Class[]
+}
+
 export type Course = {
     id: string
     subject: string
@@ -20,20 +33,26 @@ export type Section = {
     enrolled?: boolean
 }
 
-export type Enroll = {
+export type Class = {
+    subject: string
     course: string
     section: string
 }
 
-export type Search = {
-    course: string
-    section: string
-    CRN: string
-}
-
-export const searchParams = {subject: '', number: ''}
-
-export const Enrollment: Enroll[] = []
+export const Accounts: Account[] = [
+    {
+        CWID: "34614325",
+        name: "Regilax Student",
+        email: "student@college.edu",
+        password: "Password",
+        rank: "Junior",
+        major: ["Computer Science B.S."],
+        cart: [],
+        enrolled: [],
+        waitlist: [],
+        taken: [],
+    }
+]
 
 export const Courses: Course[] = [
     {

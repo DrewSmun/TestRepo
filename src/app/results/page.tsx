@@ -4,15 +4,19 @@ import { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Course, Section, Courses, } from "@/components/ui/data"
+import { Course, Section, Courses, Class, Accounts } from "@/components/ui/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
-import searchParams from "@/components/ui/global"
+import { useAccount } from "@/components/meta/context"
 
-function CourseDropdown({ course }: { course: Course }) {
+function CourseDropdown({course} : {course: Course}) {
+  const { user } = useAccount()
+
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const AddCourse = () => {}
+  const AddCourse = (subject : string, course : string, section : string) => {
+    user.cart.push({subject: subject, course: course, section: section})
+  }
 
   return (
     <Card className="mb-4 bg-white">
@@ -39,7 +43,7 @@ function CourseDropdown({ course }: { course: Course }) {
                 professor={section.professor}
                 seatsOpen={section.seatsOpen}
                 seats={section.seats}
-                onAdd={AddCourse}>
+                onAdd={() => AddCourse(course.subject, course.number, section.id)}>
               </CourseCard>
             ))}
           </div>

@@ -4,17 +4,23 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useAccount } from "@/components/meta/context"
+import { Account, Accounts } from "@/components/ui/data"
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
+  const { setUser } = useAccount()
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically handle the login logic
-    // For this example, we'll just navigate to the welcome page
-    router.push('/welcome')
+    let account = Accounts.filter((account : Account) => (account.email == email && account.password == password))
+
+    if (account.length) {
+      setUser(account[0])
+      router.push('/welcome')
+    }
   }
 
   return (
@@ -34,7 +40,7 @@ export default function Login() {
             type="email"
             placeholder="Email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value.toLowerCase())}
             required
           />
           <Input
