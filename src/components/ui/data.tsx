@@ -25,6 +25,12 @@ export type Enroll = {
     section: string
 }
 
+export type Search = {
+    course: string
+    section: string
+    CRN: string
+}
+
 export const searchParams = {subject: '', number: ''}
 
 export const Enrollment: Enroll[] = []

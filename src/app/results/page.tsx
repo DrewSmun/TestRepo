@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Course, Section, Courses, } from "@/components/ui/data"
@@ -49,8 +49,8 @@ function CourseDropdown({ course }: { course: Course }) {
   )
 }
 
-export default function Results({ params }) {
-  const [parameters, setParams] = useState(params);
+export default function Results() {
+  const params = useParams<{subject: string, course: string}>()
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
