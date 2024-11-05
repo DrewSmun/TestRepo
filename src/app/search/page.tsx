@@ -32,7 +32,7 @@ export default function FindClasses() {
       searchParams.subject = courseSubject
       searchParams.number = courseNumber
     }
-    router.push(`/results?subject=${courseSubject.toUpperCase()}&course=${courseNumber.toUpperCase()}`)
+    router.push(`/results?subject=${courseSubject.toUpperCase()}&number=${courseNumber.toUpperCase()}`)
     // setIsOverlayOpen(true)
   }
 
