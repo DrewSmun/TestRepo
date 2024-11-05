@@ -51,16 +51,17 @@ function CourseDropdown({ course }: { course: Course }) {
 
 export default function Results() {
   const searchParams = useSearchParams()
-  console.log(searchParams.get('course'))
+  const subject = searchParams.get('subject')
+  const number = searchParams.get('course')
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
       <main className="p-4">
-        {/* { Courses.filter(
-          (course : Course) => (["any", course.subject].includes(params.subject) && ["any", course.number].includes(params.course))
+        { Courses.filter(
+          (course : Course) => (['', course.subject].includes(subject) && ['', course.number].includes(number))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
-        )} */}
+        )}
       </main>
     </div>
   );
