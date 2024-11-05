@@ -23,10 +23,9 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Suspense fallback={null}> '
-          
+        <Suspense fallback={null}>
+          {children}
         </Suspense>
-        {children}
       </body>
     </html>
   );
