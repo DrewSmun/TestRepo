@@ -1,46 +1,32 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
-import CourseCard from "@/components/ui/course-card"
-import { Course, Section, Courses } from "@/components/ui/data"
-import searchParams from "@/components/ui/global"
-import PageTransition from '@/components/meta/page-transition'
-import Header from '@/components/ui/header'
+import { Input } from "@/components/ui/input"
 
-export default function CourseList() {
-  return (
-    <PageTransition>
-    <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
-      <Header showShoppingCart={true} title="My Courses"/>
-      {/* <header className="flex justify-between items-center p-4 bg-white">
-        <Button variant="ghost" size="icon">
-          <ChevronLeft className="h-6 w-6" />
-        </Button>
-        <h1 className="text-xl font-semibold">Search Results</h1>
-        <Button variant="ghost" size="icon">
-          <ShoppingCart className="h-6 w-6" />
-        </Button>
-      </header> */}
-      <main className="p-4">
-        {Courses.map((course) => (course.sections.map((section) => {
-          if (section.enrolled) {
-            return <CourseCard
-              section={section.id}
-              days={section.days}
-              time={section.time}
-              location={section.location}
-              professor={section.professor}
-              seatsOpen={section.seatsOpen}
-              seats={section.seats}
-              code={course.id}
-              title={course.title}>
-            </CourseCard>
-          }
-        })))}
-      </main>
-    </div>
-    </PageTransition>
-  );
-}
+export default function Courses() {
+    const router = useRouter()
+  
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+        <div className="w-full max-w-md space-y-8">
+          <h1 className="text-3xl font-bold text-center">Welcome</h1>
+          <p className="text-center text-gray-600">
+            You can register for classes on OCTOBER 29
+          </p>
+          <div className="space-y-4">
+            <Button variant="outline" className="w-full flex items-center justify-center">
+              <span className="mr-2">🔍</span> Testing
+            </Button>
+            <Button variant="outline" className="w-full flex items-center justify-center">
+              <span className="mr-2">📚</span> 1, 2, 3
+            </Button>
+            <Button variant="outline" className="w-full flex items-center justify-center">
+              <span className="mr-2">📅</span> Success
+            </Button>
+          </div>
+        </div>
+      </div>
+    )
+  }

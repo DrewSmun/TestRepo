@@ -1,14 +1,13 @@
 'use client';
 
+import React from 'react';
 import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, Search, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import React from 'react';
-import AwesomeAlert from 'react-native-awesome-alerts';
-import PageTransition from '../../components/meta/page-transition'
-import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom';
-import Header from '@/components/ui/header'
 import searchParams from "@/components/ui/global"
+// import AwesomeAlert from 'react-native-awesome-alerts';
+// import PageTransition from '../../components/meta/page-transition'
+// import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom';
 
 export default function FindClasses() {
   const router = useRouter()
@@ -38,15 +37,16 @@ export default function FindClasses() {
       searchParams.number = courseNumber
     }
     router.push(`/results`)
+    // setIsOverlayOpen(true)
   }
 
   return (
-    <PageTransition>
-      
+    // <PageTransition>
     <div className="min-h-screen bg-blue-100 flex flex-col">
-    <Header showShoppingCart={true} title="Find Classes"/>
+
       <main className="flex-grow flex flex-col">
         <div className="bg-white p-6 shadow-md">
+          <h1 className="text-2xl font-bold text-center mb-6">Find Classes</h1>
 
           <div className="relative mb-4">
             <select
@@ -121,15 +121,6 @@ export default function FindClasses() {
           </div>
         </div>
       </main>
-      <SlideInOverlay isOpen={isOverlayOpen} title="TEST TITLE" onClose={() => setIsOverlayOpen(false)}>
-          <button 
-            onClick={() => setIsOverlayOpen(false)}
-            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition-colors duration-200"
-          >
-            Close
-          </button>
-        </SlideInOverlay> 
     </div>
-    </PageTransition>
   )
 }
