@@ -52,7 +52,7 @@ function CourseDropdown({ course }: { course: Course }) {
 export default function Results() {
   const params = useParams<{subject: string, course: string}>()
 
-  console.log(params)
+  console.log(params.toString())
 
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
