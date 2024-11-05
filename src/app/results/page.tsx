@@ -56,7 +56,7 @@ export default function Results() {
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
       <main className="p-4">
         { Courses.filter(
-          (course : Course) => ((course.subject == searchParams.subject || searchParams.subject == '') && (course.number == searchParams.number || searchParams.number == ''))
+          (course : Course) => (['', course.subject].includes(params.subject) && ['', course.number].includes(params.course))
         ).map(
           (course : Course) => (<CourseDropdown course={course}/>)
         )}
