@@ -52,7 +52,7 @@ function CourseDropdown({ course }: { course: Course }) {
 export default function Results() {
   const searchParams = useSearchParams()
   const subject = searchParams.get('subject')
-  const number = searchParams.get('course')
+  const number = searchParams.get('number')
 
   console.log(`Subject: ${subject}, Course: ${number}`)
 
