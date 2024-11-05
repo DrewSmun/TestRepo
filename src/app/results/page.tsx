@@ -52,8 +52,11 @@ function CourseDropdown({ course }: { course: Course }) {
 export default function Results() {
   const params = useParams<{subject: string, course: string}>()
 
+  
+
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
+      <h1 className="text-2xl font-bold text-center mb-6">{params.subject}</h1>
       <main className="p-4">
         { Courses.filter(
           (course : Course) => (['', course.subject].includes(params.subject) && ['', course.number].includes(params.course))
