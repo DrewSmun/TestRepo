@@ -7,14 +7,15 @@ import { Button } from "@/components/ui/button"
 import { Course, Section, Courses, Class, Accounts } from "@/components/ui/data"
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
-// import { useAccount } from "@/components/meta/context"
+import { useUser } from "@/components/meta/context"
 
 function CourseDropdown({course} : {course: Course}) {
-  // const { user } = useAccount()
+  const { user } = useUser()
 
   const [isExpanded, setIsExpanded] = useState(false);
 
   const AddCourse = (subject : string, course : string, section : string) => {
+    user.cart.push({subject: subject, course: course, section: section})
     // user!.cart.push({subject: subject, course: course, section: section})
   }
 
