@@ -15,7 +15,7 @@ function CourseDropdown({course} : {course: Course}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const AddCourse = (subject : string, course : string, section : string) => {
-    user.cart.push({subject: subject, course: course, section: section})
+    user!.cart.push({subject: subject, course: course, section: section})
   }
 
   return (
