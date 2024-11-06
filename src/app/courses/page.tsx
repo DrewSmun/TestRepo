@@ -14,7 +14,7 @@ export default function CourseList() {
   return (
     <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
       <main className="p-4">
-        {user.enrolled.map((e : Class) => (
+        {user?.enrolled.map((e : Class) => (
           <CourseCard
             section={e.section.id}
             days={e.section.days}
