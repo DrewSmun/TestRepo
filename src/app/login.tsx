@@ -4,14 +4,14 @@ import { useState, useContext } from 'react'
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { AccountContext } from "@/components/meta/context"
 import { Account, Accounts } from "@/components/ui/data"
+import { useUser } from "@/components/meta/context"
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const router = useRouter()
-  const { setUser } = useContext(AccountContext)
+  const { setUser } = useUser()
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
