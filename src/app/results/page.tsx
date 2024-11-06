@@ -14,9 +14,8 @@ function CourseDropdown({course} : {course: Course}) {
 
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const AddCourse = (subject : string, course : string, section : string) => {
-    user?.enrolled.push({subject: subject, course: course, section: section})
-    // user!.cart.push({subject: subject, course: course, section: section})
+  const AddCourse = (course : Course, section : Section) => {
+    user?.enrolled.push({course: course, section: section})
   }
 
   return (
@@ -44,7 +43,7 @@ function CourseDropdown({course} : {course: Course}) {
                 professor={section.professor}
                 seatsOpen={section.seatsOpen}
                 seats={section.seats}
-                onAdd={() => AddCourse(course.subject, course.number, section.id)}>
+                onAdd={() => AddCourse(course, section)}>
               </CourseCard>
             ))}
           </div>

@@ -34,9 +34,8 @@ export type Section = {
 }
 
 export type Class = {
-    subject: string
-    course: string
-    section: string
+    course: Course
+    section: Section
 }
 
 export const Accounts: Account[] = [
