@@ -3,7 +3,7 @@ import localFont from "next/font/local"
 import "./globals.css"
 import { Suspense } from 'react'
 import { Account } from "@/components/ui/data";
-import { AccountProvider } from "@/components/meta/context"
+import AccountProvider from "@/components/meta/context"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
