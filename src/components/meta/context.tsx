@@ -8,7 +8,7 @@ interface UserContextType {
     setUser: (user: Account | null) => void
 }
 
-export const AccountContext = createContext<UserContextType>()
+export const AccountContext = createContext()
 
 export function AccountProvider({children} : {children : ReactNode}) {
   const [user, setUser] = useState(null)
