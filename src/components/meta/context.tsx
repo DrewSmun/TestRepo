@@ -11,7 +11,7 @@ interface AccountContextType {
 const AccountContext = createContext<AccountContextType>({user: defaultAccount, setUser: (defaultAccount : Account) => {}})
 
 export function AccountProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<Account>()
+    const [user, setUser] = useState<Account>(defaultAccount)
 
     return (
         <AccountContext.Provider value={{ user, setUser }}>
