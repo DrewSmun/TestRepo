@@ -11,12 +11,7 @@ import { useUser } from "@/components/meta/context"
 
 function CourseDropdown({course} : {course: Course}) {
   const { user } = useUser()
-
   const [isExpanded, setIsExpanded] = useState(false);
-
-  const AddCourse = (course : Course, section : Section) => {
-    user?.enrolled.push({course: course, section: section})
-  }
 
   return (
     <Card className="mb-4 bg-white">
@@ -36,14 +31,10 @@ function CourseDropdown({course} : {course: Course}) {
           <div className="mt-4 space-y-4">
             {course.sections.map((section : Section) => (
               <CourseCard
-                section={section.id}
-                days={section.days}
-                time={section.time}
-                location={section.location}
-                professor={section.professor}
-                seatsOpen={section.seatsOpen}
-                seats={section.seats}
-                onAdd={() => AddCourse(course, section)}>
+                course={course}
+                section={section}
+                showHeader={false}
+                isAdded={false}>
               </CourseCard>
             ))}
           </div>
