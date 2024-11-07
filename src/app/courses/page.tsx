@@ -5,7 +5,6 @@ import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import CourseCard from "@/components/ui/course-card"
 import { Course, Section, Class, Courses } from "@/components/ui/data"
-import searchParams from "@/components/ui/global"
 import { useUser } from "@/components/meta/context"
 
 export default function CourseList() {
