@@ -18,7 +18,7 @@ export default function CourseCard({course, section, showHeader, isAdded}: Cours
 
     const onButtonClick = () => {
         if (added) {
-            user.cart = user?.cart.filter((e : Class) => {
+            user!.cart = user?.cart.filter((e : Class) => {
                 e.course != course || e.section != section
             })
         }
