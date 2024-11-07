@@ -1,14 +1,14 @@
 'use client'
 
 import { createContext, useContext, useState, ReactNode } from 'react'
-import { Account } from "@/components/ui/data"
+import { Account, defaultAccount } from "@/components/ui/data"
 
 interface AccountContextType {
     user: Account
     setUser: (user: Account) => void
 }
 
-const AccountContext = createContext<AccountContextType>({user: null, setUser: () => {}})
+const AccountContext = createContext<AccountContextType>(defaultAccount)
 
 export function AccountProvider({ children }: { children: ReactNode }) {
     const [user, setUser] = useState<Account>()

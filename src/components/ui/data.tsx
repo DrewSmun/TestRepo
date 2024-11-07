@@ -38,6 +38,19 @@ export type Class = {
     section: Section
 }
 
+export const defaultAccount = {
+    CWID: "00000000",
+    name: "Test",
+    email: "test@test.com",
+    password: "test",
+    rank: "test",
+    major: [""],
+    cart: [],
+    enrolled: [],
+    waitlist: [],
+    taken: []
+}
+
 export const Accounts: Account[] = [
     {
         CWID: "34614325",
