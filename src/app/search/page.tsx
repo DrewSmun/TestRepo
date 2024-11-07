@@ -4,7 +4,6 @@ import React from 'react';
 import { useState } from 'react'
 import { ChevronLeft, ShoppingCart, Search, ChevronDown } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import searchParams from "@/components/ui/global"
 // import AwesomeAlert from 'react-native-awesome-alerts';
 // import PageTransition from '../../components/meta/page-transition'
 // import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom';
@@ -24,14 +23,7 @@ export default function FindClasses() {
   ]
 
   const toResults = () => {
-    if (searchTerm != '') {
-      searchParams.subject = searchTerm.split(' ')[0]
-      searchParams.number = searchTerm.split(' ')[1]
-    }
-    else {
-      searchParams.subject = courseSubject
-      searchParams.number = courseNumber
-    }
+    
     router.push(`/results?subject=${courseSubject.toUpperCase()}&number=${courseNumber.toUpperCase()}`)
     // setIsOverlayOpen(true)
   }
