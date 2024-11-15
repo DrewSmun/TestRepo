@@ -99,7 +99,7 @@ export default async function Results() {
   const subject = searchParams.get('subject')
   const number = searchParams.get('number')
 
-  const [courses, setCourses] = useState([])
+  const [courses, setCourses] = useState()
 
   React.useEffect(() => {
     queryData();
