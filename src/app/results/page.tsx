@@ -100,15 +100,22 @@ export default async function Results() {
   const number = searchParams.get('number')
 
   const [courses, setCourses] = useState([])
-  
-  let queryParams = []
-  subject ? queryParams.push(`Subject: "${subject}"`) : {}
-  number ? queryParams.push(`Course_Number: ${number}`) : {}
 
-  let query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
-  setCourses(await read(query))
+  React.useEffect(() => {
+    queryData();
+  }, []);
 
-  console.log(query)
+  const queryData = async () => {
+    let queryParams = []
+    subject ? queryParams.push(`Subject: "${subject}"`) : {}
+    number ? queryParams.push(`Course_Number: ${number}`) : {}
+
+    const query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
+    const response = await read(query)
+    setCourses(response)
+
+    console.log(query)
+  };
 
   return (
       <PageTransition>
