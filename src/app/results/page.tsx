@@ -94,13 +94,20 @@ function CourseDropdown({ course }: { course: Course }) {
   )
 }
 
-export default function Results() {
+export default async function Results() {
   const searchParams = useSearchParams()
   const subject = searchParams.get('subject')
   const number = searchParams.get('number')
+  
+  let queryParams = []
+  subject ? queryParams.push(`Subject: ${subject}`) : {}
+  number ? queryParams.push(`Course_Number: ${number}`) : {}
 
+  let query = `MATCH (course:Course {${queryParams.toString()}) RETURN course`
+  let results = await read(query)
 
-  let query = `MATCH (course:Course {Subject: "CSIS"}) RETURN course`
+  let text = JSON.stringify(results, null, 4)
+  console.log(text)
 
   return (
       <PageTransition>
