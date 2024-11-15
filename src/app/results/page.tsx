@@ -113,6 +113,7 @@ export default async function Results() {
     const query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
     const response = await read(query)
     setCourses(response)
+    // waurgh
 
     console.log(query)
   };
