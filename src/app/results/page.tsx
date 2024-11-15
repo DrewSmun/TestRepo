@@ -103,7 +103,7 @@ export default async function Results() {
   subject ? queryParams.push(`Subject: ${subject}`) : {}
   number ? queryParams.push(`Course_Number: ${number}`) : {}
 
-  let query = `MATCH (course:Course {${queryParams.toString()}) RETURN course`
+  let query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
   let results = await read(query)
 
   let text = JSON.stringify(results, null, 4)
