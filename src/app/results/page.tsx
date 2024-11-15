@@ -98,16 +98,17 @@ export default async function Results() {
   const searchParams = useSearchParams()
   const subject = searchParams.get('subject')
   const number = searchParams.get('number')
+
+  const [courses, setCourses] = useState([])
   
   let queryParams = []
   subject ? queryParams.push(`Subject: "${subject}"`) : {}
   number ? queryParams.push(`Course_Number: ${number}`) : {}
 
   let query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
-  let results = await read(query)
+  setCourses(await read(query))
 
-  let text = JSON.stringify(results, null, 4)
-  console.log(text)
+  console.log(query)
 
   return (
       <PageTransition>
@@ -125,11 +126,15 @@ export default async function Results() {
 
           <Header showShoppingCart={true} title="Search Results"/>
           <main className="p-4">
-            {Courses.filter(
+            {/*Courses.filter(
                 (course: Course) => (['', course.subject].includes(subject!) && ['', course.number].includes(number!))
             ).map(
                 (course: Course) => (<CourseDropdown course={course}/>)
-            )}
+            )*/}
+
+            {
+
+            }
           </main>
         </div>
       </PageTransition>
