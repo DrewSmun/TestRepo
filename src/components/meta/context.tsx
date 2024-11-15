@@ -21,6 +21,5 @@ export function AccountProvider({ children }: { children: ReactNode }) {
 }
 
 export function useUser() {
-    const context = useContext(AccountContext)
-    return context
+    return useContext(AccountContext)
 }

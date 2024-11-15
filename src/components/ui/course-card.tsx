@@ -8,26 +8,31 @@ import { useUser } from "@/components/meta/context"
 interface CourseCardProps {
     course: Course
     section: Section
+    onTouch: (code : string) => void
     showHeader: boolean
     isAdded: boolean
 }
 
-export default function CourseCard({course, section, showHeader, isAdded}: CourseCardProps) {
+export default function CourseCard({course, section, onTouch, showHeader, isAdded}: CourseCardProps) {
     const { user } = useUser()
     const [ added, setAdded ] = useState(isAdded)
 
     const onButtonClick = () => {
         if (added) {
-            user!.cart = user?.cart.filter((e : Class) => {
+            user.cart = user.cart.filter((e : Class) => {
                 e.course != course || e.section != section
             })
         }
 
         else {
-            user?.cart.push({course: course, section: section})
+            user.cart.push({course: course, section: section})
         }
 
         setAdded(!added)
+    }
+
+    const onCardClick = () => {
+        onTouch(course.id)
     }
 
     return (
@@ -42,7 +47,7 @@ export default function CourseCard({course, section, showHeader, isAdded}: Cours
             <div className="flex items-stretch gap-4 p-4">
                 <div className="text-4xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {section.id} </div>
                 
-                <div className="flex-1 flex flex-col">
+                <div className="flex-1 flex flex-col" onClick={onCardClick}>
                     <div className="flex justify-between items-start mb-2">
                         <div className="flex gap-2 text-sm mb-1">
                             { section.days.map((day, index) => (<span key={index} className="font-medium"> {day} </span>)) }
