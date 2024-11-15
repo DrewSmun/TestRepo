@@ -100,7 +100,7 @@ export default async function Results() {
   const number = searchParams.get('number')
   
   let queryParams = []
-  subject ? queryParams.push(`Subject: ${subject}`) : {}
+  subject ? queryParams.push(`Subject: "${subject}"`) : {}
   number ? queryParams.push(`Course_Number: ${number}`) : {}
 
   let query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
