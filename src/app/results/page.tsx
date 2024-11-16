@@ -81,13 +81,13 @@ function CourseDropdown({course} : {course : any}) {
           </CardHeader>
 
           <CardContent className="px-4 pb-4">
-            {/* {isExpanded && (
+            {isExpanded && (
               <div className="mt-4 space-y-4">
-                {sections.map(section => {
+                {sections.map((section : any) => (
                   <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} isAdded={false}/>
-                })}
+                ))}
               </div>
-            )} */}
+            )}
           </CardContent>
         </Card>
         {/* TODO Implement Chex's Generic Popup System */}
@@ -137,11 +137,6 @@ export default function Results() {
 
           <Header showShoppingCart={true} title="Search Results"/>
           <main className="p-4">
-            {/*Courses.filter(
-                (course: Course) => (['', course.subject].includes(subject!) && ['', course.number].includes(number!))
-            ).map(
-                (course: Course) => (<CourseDropdown course={course}/>)
-            )*/}
             {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))}
           </main>
         </div>
