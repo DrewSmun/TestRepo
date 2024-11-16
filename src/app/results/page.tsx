@@ -122,7 +122,9 @@ export default function Results() {
     const query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
     const response = await read(query)
 
-    setCourses(response)
+    console.log(JSON.stringify(response, null, 4))
+
+    // setCourses(response)
   }
 
   return (
@@ -141,7 +143,7 @@ export default function Results() {
 
           <Header showShoppingCart={true} title="Search Results"/>
           <main className="p-4">
-            {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))}
+            {/* {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))} */}
           </main>
         </div>
       </PageTransition>
