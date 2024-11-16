@@ -81,13 +81,13 @@ function CourseDropdown({course} : {course : any}) {
           </CardHeader>
 
           <CardContent className="px-4 pb-4">
-            {isExpanded && (
+            {/* {isExpanded && (
               <div className="mt-4 space-y-4">
                 {sections.map(section => {
                   <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} isAdded={false}/>
                 })}
               </div>
-            )}
+            )} */}
           </CardContent>
         </Card>
         {/* TODO Implement Chex's Generic Popup System */}
