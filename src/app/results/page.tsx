@@ -28,12 +28,12 @@ function CourseDropdown({course} : {course : any}) {
   }, [])
 
   const queryData = async () => {
-    const query = `MATCH (section:Section)-[r:SectionOf]->(course:Course {Course_Code:${course.Course_Code}}) RETURN section`
+    const query = `MATCH (section:Section)-[r:SectionOf]->(course:Course {Course_Code:${course.Course_Code.low}}) RETURN section`
     const response = await read(query)
 
-    console.log(JSON.stringify(response[0], null, 4))
+    console.log(JSON.stringify(response, null, 4))
 
-    setSections(response)
+    // setSections(response)
   }
   
   const DisplayClassInfo = async (courseCode : String) => {
@@ -122,9 +122,7 @@ export default function Results() {
     const query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
     const response = await read(query)
 
-    console.log(JSON.stringify(response, null, 4))
-
-    // setCourses(response)
+    setCourses(response)
   }
 
   return (
@@ -143,7 +141,7 @@ export default function Results() {
 
           <Header showShoppingCart={true} title="Search Results"/>
           <main className="p-4">
-            {/* {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))} */}
+            {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))}
           </main>
         </div>
       </PageTransition>
