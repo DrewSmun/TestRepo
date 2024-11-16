@@ -17,11 +17,22 @@ import * as React from "react";
 
 // const [infoCourse, setInfoCourse] = useState({})
 
-function CourseDropdown({ course }: { course: Course }) {
+function CourseDropdown({course} : {course : any}) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
-
   const [infoCourse, setInfoCourse] = useState({})
+  const [sections, setSections] = useState<any[]>([])
+
+  React.useEffect(() => {
+    queryData()
+  }, [])
+
+  const queryData = async () => {
+    const query = `MATCH (section:Section)-[r:SectionOf]->(course:Course {Course_Code:${course.Course_Code}}) RETURN section`
+    const response = await read(query)
+
+    setSections(response)
+  }
   
   const DisplayClassInfo = async (courseCode : String) => {
     //const query = "MATCH (c:Course {Course_Code: $CourseCode}) RETURN c.Course_Code as CourseCode, c.Course_Name as Name, c.Description as Desc, c.Prerequisites as Prereq, c.Prerequisites_And_Or_Corequisites as Precoreq, c.Corequisites as Coreq;"
@@ -71,17 +82,11 @@ function CourseDropdown({ course }: { course: Course }) {
 
           <CardContent className="px-4 pb-4">
             {isExpanded && (
-                <div className="mt-4 space-y-4">
-                  {course.sections.map((section: Section) => (
-                      <CourseCard
-                          course={course}
-                          section={section}
-                          onTouch={DisplayClassInfo}
-                          showHeader={false}
-                          isAdded={false}>
-                      </CourseCard>
-                  ))}
-                </div>
+              <div className="mt-4 space-y-4">
+                {sections.map((section : any) => {
+                  <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} isAdded={false}/>
+                })}
+              </div>
             )}
           </CardContent>
         </Card>
@@ -94,7 +99,7 @@ function CourseDropdown({ course }: { course: Course }) {
   )
 }
 
-export default async function Results() {
+export default function Results() {
   const searchParams = useSearchParams()
   const subject = searchParams.get('subject')
   const number = searchParams.get('number')
@@ -112,10 +117,9 @@ export default async function Results() {
 
     const query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
     const response = await read(query)
-    setCourses(response)
 
-    console.log(JSON.stringify(response, null, 4))
-  };
+    setCourses(response)
+  }
 
   return (
       <PageTransition>
@@ -139,9 +143,7 @@ export default async function Results() {
                 (course: Course) => (<CourseDropdown course={course}/>)
             )*/}
 
-            {
-
-            }
+            {courses.map((course : any) => {<CourseDropdown course={course.course.properties}/>})}
           </main>
         </div>
       </PageTransition>
