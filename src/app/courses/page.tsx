@@ -31,7 +31,6 @@ export default function CourseList() {
         <main className="p-4">
           {user.enrolled.map((e: Class) => (
               <CourseCard
-                  course={e.course}
                   section={e.section}
                   onTouch={() => {
                   }}
@@ -44,7 +43,6 @@ export default function CourseList() {
         <main className="p-4">
           {user.waitlist.map((e: Class) => (
               <CourseCard
-                  course={e.course}
                   section={e.section}
                   onTouch={() => {
                   }}
