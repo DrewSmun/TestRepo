@@ -74,8 +74,8 @@ function CourseDropdown({course} : {course : any}) {
         <Card className="mb-4 bg-white">
           <CardHeader className="p-4 flex flex-row items-center justify-between">
             <div className="flex flex-col">
-              <CardTitle className="text-lg font-bold"> {course.id} </CardTitle>
-              <div className="text-sm text-muted-foreground"> {course.title} </div>
+              <CardTitle className="text-lg font-bold"> {course.Course_Code} </CardTitle>
+              <div className="text-sm text-muted-foreground"> {course.Course_Name} </div>
             </div>
 
             <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
