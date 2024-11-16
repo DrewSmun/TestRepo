@@ -107,15 +107,14 @@ export default async function Results() {
 
   const queryData = async () => {
     let queryParams = []
-    subject ? queryParams.push(`Subject: "${subject}"`) : {}
-    number ? queryParams.push(`Course_Number: ${number}`) : {}
+    subject ? queryParams.push(`Subject:"${subject}"`) : {}
+    number ? queryParams.push(`Course_Number:${number}`) : {}
 
     const query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
     const response = await read(query)
     setCourses(response)
-    // waurgh
 
-    console.log(query)
+    console.log(JSON.stringify(response, null, 4))
   };
 
   return (
