@@ -104,7 +104,7 @@ export default function Results() {
   const subject = searchParams.get('subject')
   const number = searchParams.get('number')
 
-  const [courses, setCourses] = useState<any[]>()
+  const [courses, setCourses] = useState<any[]>([])
 
   React.useEffect(() => {
     queryData();
