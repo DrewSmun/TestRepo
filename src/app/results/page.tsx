@@ -28,10 +28,11 @@ function CourseDropdown({course} : {course : any}) {
   }, [])
 
   const queryData = async () => {
-    const query = `MATCH (section:Section)-[r:SectionOf]->(course:Course {Course_Code:${course.Course_Code.low}}) RETURN section`
-    const response = await read(query)
+    console.log(JSON.stringify(course, null, 4))
+    // const query = `MATCH (section:Section)-[r:SectionOf]->(course:Course {Course_Code:${course.Course_Code}}) RETURN section`
+    // const response = await read(query)
 
-    console.log(JSON.stringify(response, null, 4))
+    // console.log(JSON.stringify(response, null, 4))
 
     // setSections(response)
   }
@@ -129,15 +130,15 @@ export default function Results() {
       <PageTransition>
         <div className="max-w-md mx-auto bg-gray-100 min-h-screen dyslexia-font">
           <style jsx global>{` @font-face {
-          font-family: 'Dyslexia Font';
-          src: url('/Dyslexia_Font.ttf') format('truetype');
-          font-weight: normal;
-          font-style: normal;
-        }
+            font-family: 'Dyslexia Font';
+            src: url('/Dyslexia_Font.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+          }
 
-        .dyslexia-font {
-          font-family: 'Dyslexia Font', sans-serif;
-        } `}</style>
+          .dyslexia-font {
+            font-family: 'Dyslexia Font', sans-serif;
+          } `}</style>
 
           <Header showShoppingCart={true} title="Search Results"/>
           <main className="p-4">
