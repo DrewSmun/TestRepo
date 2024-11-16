@@ -31,6 +31,8 @@ function CourseDropdown({course} : {course : any}) {
     const query = `MATCH (section:Section)-[r:SectionOf]->(course:Course {Course_Code:${course.Course_Code}}) RETURN section`
     const response = await read(query)
 
+    console.log(JSON.stringify(response[0], null, 4))
+
     setSections(response)
   }
   
@@ -83,9 +85,9 @@ function CourseDropdown({course} : {course : any}) {
           <CardContent className="px-4 pb-4">
             {isExpanded && (
               <div className="mt-4 space-y-4">
-                {sections.map((section : any) => (
+                {/* {sections.map((section : any) => (
                   <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} isAdded={false}/>
-                ))}
+                ))} */}
               </div>
             )}
           </CardContent>
@@ -93,7 +95,7 @@ function CourseDropdown({course} : {course : any}) {
         {/* TODO Implement Chex's Generic Popup System */}
         <SlideInOverlay isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(false)}>
           <CourseInfoCard className={"Test"} classNumber={"Test"} crn={"Test"} description={"Test"}
-                          prerequisites={"Test"} corequisites={"Test"}></CourseInfoCard>
+                          prerequisites={"Test"} corequisites={"Test"}/>
         </SlideInOverlay>
       </div>
   )
