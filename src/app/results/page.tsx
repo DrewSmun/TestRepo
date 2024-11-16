@@ -142,7 +142,6 @@ export default function Results() {
             ).map(
                 (course: Course) => (<CourseDropdown course={course}/>)
             )*/}
-
             {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))}
           </main>
         </div>
