@@ -143,7 +143,7 @@ export default function Results() {
                 (course: Course) => (<CourseDropdown course={course}/>)
             )*/}
 
-            {courses.map((course : any) => {<CourseDropdown course={course.course.properties}/>})}
+            {courses.map(course => {<CourseDropdown course={course.course.properties}/>})}
           </main>
         </div>
       </PageTransition>
