@@ -18,7 +18,7 @@ export default function CourseCard({section, onTouch, showHeader, isAdded}: Cour
 
     const [code, setCode] = useState('')
     const [time, setTime] = useState('')
-    const [days, setDays] = useState([])
+    const [days, setDays] = useState<any[]>([])
     const [location, setLocation] = useState('')
     
     React.useEffect(() => {
