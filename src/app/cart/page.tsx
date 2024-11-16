@@ -34,10 +34,8 @@ export default function Cart() {
         <main className="p-4">
           {user.cart.map((e: Class) => (
               <CourseCard
-                  course={e.course}
                   section={e.section}
-                  onTouch={() => {
-                  }}
+                  onTouch={() => {}}
                   showHeader={true}
                   isAdded={true}>
               </CourseCard>
