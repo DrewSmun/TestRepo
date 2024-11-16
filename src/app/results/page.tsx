@@ -104,7 +104,7 @@ export default function Results() {
   const subject = searchParams.get('subject')
   const number = searchParams.get('number')
 
-  const [courses, setCourses] = useState<any[]>([])
+  const [courses, setCourses] = useState<any[]>()
 
   React.useEffect(() => {
     queryData();
@@ -143,7 +143,7 @@ export default function Results() {
                 (course: Course) => (<CourseDropdown course={course}/>)
             )*/}
 
-            {courses.map(course => {<CourseDropdown course={course.course.properties}/>})}
+            {courses.map((course : any) => {<CourseDropdown course={course.course.properties}/>})}
           </main>
         </div>
       </PageTransition>
