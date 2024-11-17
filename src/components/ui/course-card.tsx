@@ -17,7 +17,7 @@ interface CourseCardProps {
 export default function CourseCard({section, onTouch, modal, showHeader = false}: CourseCardProps) {
     const { user } = useUser()
     const [ added, setAdded ] = useState(false)
-    const [ classIsFull, setClassisFull ] = useState(Math.random() < 0.5)
+    const [ full, setFull ] = useState(Math.random() < 0.5)
 
     const [ code, setCode ] = useState('')
     const [ time, setTime ] = useState('')
@@ -45,10 +45,15 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     }, [])
 
     const queryData = async() => {
-        let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart'] AS added`
-        let response = await read(query)
+        let getAdded = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart'] AS added`
+        let rspAdded = await read(getAdded)
 
-        setAdded(response[0].added)
+        setAdded(rspAdded[0].added)
+
+        let getFull = `MATCH (s:Section {id: ${section.id.low}}) RETURN s.seatsAvailable AS openSeats, s.maximumEnrollment AS maxSeats`
+        let rspFull = await read(getFull)
+
+        console.log(JSON.stringify(rspFull, null, 4))
     }
 
     const addToCartNotif = () => toast.info('Added to cart!', {
@@ -137,7 +142,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
                 timeConflictNotif()
             }
 
-            else if (classIsFull) {
+            else if (full) {
                 modal(toggleByWaitlist)
             }
 
@@ -155,13 +160,13 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     return (
         <Card className=" w-full max-w-xl bg-white overflow-hidden border mb-2">
             {(showHeader) && (
-                <CardHeader className={`bg-white border-black p-3 pb-2 border-b-1 border-l-8 ${classIsFull ? "border-l-orange-500" : "border-l-blue-500"}`}>
+                <CardHeader className={`bg-white border-black p-3 pb-2 border-b-1 border-l-8 ${full ? "border-l-orange-500" : "border-l-blue-500"}`}>
                     <div className="font-semibold text-primary"> {code} </div>
                     <div className="text-sm text-muted-foreground"> {section.courseTitle} </div>
                 </CardHeader>
             )}
 
-            <div className={`${classIsFull ? 'bg-orange-50' : 'bg-blue-50'} flex items-stretch gap-4 p-4 border-l-8 ${classIsFull ? "border-orange-500" : "border-blue-500"}`}>
+            <div className={`${full ? 'bg-orange-50' : 'bg-blue-50'} flex items-stretch gap-4 p-4 border-l-8 ${full ? "border-orange-500" : "border-blue-500"}`}>
                 {/* <div className="bg-blue-400 text-white flex items-center justify-center p-1"></div> */}
                 <div className="text-2xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {`${section.sequenceNumber.low}`.padStart(2, '0')} </div>
                 
@@ -183,7 +188,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
                     
 
                     <div className="justify-center flex">
-                        <Button size="icon" className={`rounded-full w-12 h-12 ${added ? 'bg-red-500 hover:bg-red-600' : classIsFull ? 'bg-orange-500 hover:bg-orange-600' : 'bg-blue-500 hover:bg-blue-600'}`} onClick={onButtonClick}>
+                        <Button size="icon" className={`rounded-full w-12 h-12 ${added ? 'bg-red-500 hover:bg-red-600' : full ? 'bg-orange-500 hover:bg-orange-600' : 'bg-blue-500 hover:bg-blue-600'}`} onClick={onButtonClick}>
                             {added ? <Minus/> : <Plus/>}
                             <span className="sr-only">Add course</span>
                         </Button>
