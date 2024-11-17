@@ -47,8 +47,8 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     const queryData = async() => {
         let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart']`
         let response = await read(query)
-
-        console.log(response)
+        
+        console.log(response.length ? response[0] : false)
 
         // setAdded(response[0])
     }
