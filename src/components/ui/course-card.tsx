@@ -14,10 +14,24 @@ interface CourseCardProps {
     showHeader?: boolean
 }
 
+const colorScheme = {
+    blue: {
+        header: "border-l-blue-500",
+        background: "bg-blue-50",
+        border: "border-blue-500"
+    },
+    orange: {
+        header: "border-l-orange-500",
+        background: "bg-orange-50",
+        border: "border-orange-500"
+    }
+}
+
 export default function CourseCard({section, onTouch, modal, showHeader = false}: CourseCardProps) {
     const { user } = useUser()
     const [ added, setAdded ] = useState(false)
-    const [ full, setFull ] = useState(false)
+    const [ colors, setColors ] = useState({}) 
+    const [ buttonColor, setButtonColor ] = useState('')
 
     const [ code, setCode ] = useState('')
     const [ time, setTime ] = useState('')
@@ -45,15 +59,30 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     }, [])
 
     const queryData = async() => {
-        let getAdded = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart'] AS added`
-        let rspAdded = await read(getAdded)
-
-        setAdded(rspAdded[0] ? rspAdded[0].added : false)
-
-        let getFull = `MATCH (s:Section {id: ${section.id.low}}) RETURN s.seatsAvailable AS openSeats`
+        let getStatus = `MATCH (:Profile {CWID: "${user}"}) -[r]-> (:Section {id: ${section.id.low}}) RETURN TYPE(r) AS status`
+        let getFull = `MATCH (s:Section {id: ${section.id.low}}) RETURN s.seatsAvailable < 1 AS full`
+        
+        let rspStatus = await read(getStatus)
         let rspFull = await read(getFull)
 
-        setFull(rspFull[0].openSeats.low < 1)
+        let isAdded = rspStatus.length > 0
+        let isFull = rspFull[0].full
+        let status = isAdded ? rspStatus[0].status : "None"
+
+        if (status == "Registered") {
+            setColors(colorScheme.blue)
+        }
+
+        else if (status == "Waitlisted" || isFull) {
+            setColors(colorScheme.orange)
+        }
+
+        else {
+            setColors(colorScheme.blue)
+        }
+
+        setButtonColor(isAdded ? 'bg-red-500 hover:bg-red-600' : isFull ? 'bg-orange-500 hover:bg-orange-600' : 'bg-blue-500 hover:bg-blue-600')
+        setAdded(isAdded)
     }
 
     const addToCartNotif = () => toast.info('Added to cart!', {
@@ -121,7 +150,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     }
 
     const removeSection = () => {
-        let query = `MATCH (p:Profile {CWID: "${user}"}) -[r:Cart]-> (s:Section {id: ${section.id.low}}) DELETE r`
+        let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) DELETE r`
         write(query)
 
         setAdded(false)
@@ -160,13 +189,13 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     return (
         <Card className=" w-full max-w-xl bg-white overflow-hidden border mb-2">
             {(showHeader) && (
-                <CardHeader className={`bg-white border-black p-3 pb-2 border-b-1 border-l-8 ${full ? "border-l-orange-500" : "border-l-blue-500"}`}>
+                <CardHeader className={`bg-white border-black p-3 pb-2 border-b-1 border-l-8 ${colors.header}`}>
                     <div className="font-semibold text-primary"> {code} </div>
                     <div className="text-sm text-muted-foreground"> {section.courseTitle} </div>
                 </CardHeader>
             )}
 
-            <div className={`${full ? 'bg-orange-50' : 'bg-blue-50'} flex items-stretch gap-4 p-4 border-l-8 ${full ? "border-orange-500" : "border-blue-500"}`}>
+            <div className={`${colors.background} flex items-stretch gap-4 p-4 border-l-8 ${colors.border}`}>
                 {/* <div className="bg-blue-400 text-white flex items-center justify-center p-1"></div> */}
                 <div className="text-2xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {`${section.sequenceNumber.low}`.padStart(2, '0')} </div>
                 
@@ -180,7 +209,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
                     </div>
                     
                     <div className="mb-4 text-xs text-black"> {time} </div>
-                    <div className="text-xs text-muted-foreground">{section.instructor} </div>
+                    <div className="text-xs text-muted-foreground"> {section.instructor} </div>
                 </div>
 
                 <div className="flex flex-col justify-between pl-4 border-l border-gray-200">
@@ -188,7 +217,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
                     
 
                     <div className="justify-center flex">
-                        <Button size="icon" className={`rounded-full w-12 h-12 ${added ? 'bg-red-500 hover:bg-red-600' : full ? 'bg-orange-500 hover:bg-orange-600' : 'bg-blue-500 hover:bg-blue-600'}`} onClick={onButtonClick}>
+                        <Button size="icon" className={`rounded-full w-12 h-12 ${buttonColor}`} onClick={onButtonClick}>
                             {added ? <Minus/> : <Plus/>}
                             <span className="sr-only">Add course</span>
                         </Button>
