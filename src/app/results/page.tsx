@@ -112,7 +112,7 @@ function CourseDropdown({course} : {course : any}) {
         <CardContent className="px-2 pb-2">
           {isExpanded && (
             <div className="mt-4 space-y-4 mb-1">
-              {course.sections.map((section: any) => (
+              {sections.map((section: any) => (
                 <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} isAdded={false} modal={openModal}/>
               ))}
             </div>
