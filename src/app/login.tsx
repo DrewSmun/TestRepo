@@ -21,6 +21,7 @@ export default function Login() {
     e.preventDefault()
 
     let query = `MATCH (profile:Profile {email: "${email}", password: "${password}"}) RETURN profile`
+    console.log(query)
     let response = await read(query)
 
     console.log(response)
