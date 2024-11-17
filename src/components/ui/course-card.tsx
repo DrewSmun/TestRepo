@@ -30,6 +30,7 @@ const colorScheme = {
 export default function CourseCard({section, onTouch, modal, showHeader = false}: CourseCardProps) {
     const { user } = useUser()
     const [ added, setAdded ] = useState(false)
+    const [ full, setFull ] = useState(false)
     const [ colors, setColors ] = useState({}) 
     const [ buttonColor, setButtonColor ] = useState('')
 
@@ -83,6 +84,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
 
         setButtonColor(isAdded ? 'bg-red-500 hover:bg-red-600' : isFull ? 'bg-orange-500 hover:bg-orange-600' : 'bg-blue-500 hover:bg-blue-600')
         setAdded(isAdded)
+        setFull(isFull)
     }
 
     const addToCartNotif = () => toast.info('Added to cart!', {
@@ -164,7 +166,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
         if (added) {
             removeSection()
             removeFromCartNotif()
-        } 
+        }
         
         else {
             if (timeConflict) {
