@@ -24,6 +24,10 @@ export default function Login() {
     let response = await read(query)
 
     console.log(JSON.stringify(response, null, 4))
+    if (response.length > 0) {
+      setUser(response[0].profile.properties.CWID)
+      
+    }
 
     // if (response.length) {
     //   setUser(response[0].profile.properties.CWID)
