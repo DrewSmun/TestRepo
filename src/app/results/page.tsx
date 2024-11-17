@@ -32,10 +32,6 @@ function CourseDropdown({course} : {course : any}) {
     let query = `MATCH (section:Section) -[:SectionOf]-> (:Course {Course_Code: "${course.Course_Code}"}) RETURN section`
     let response = await read(query)
 
-    console.log(course.Course_Code)
-    console.log(query)
-    console.log(JSON.stringify(response, null, 4))
-
     setSections(response)
   }
   
@@ -86,7 +82,13 @@ function CourseDropdown({course} : {course : any}) {
           </CardHeader>
 
           <CardContent className="px-4 pb-4">
-
+          {isExpanded && (
+            <div className="mt-4 space-y-4">
+              {sections.map((section : any) => (
+                <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} isAdded={false}/>
+              ))}
+            </div>
+          )}
           </CardContent>
         </Card>
         {/* TODO Implement Chex's Generic Popup System */}
@@ -98,13 +100,7 @@ function CourseDropdown({course} : {course : any}) {
   )
 }
 
-// {isExpanded && (
-//   <div className="mt-4 space-y-4">
-//     {/* {sections.map((section : any) => (
-//       <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} isAdded={false}/>
-//     ))} */}
-//   </div>
-// )}
+
 
 export default function Results() {
   const searchParams = useSearchParams()
@@ -122,7 +118,7 @@ export default function Results() {
     subject ? queryParams.push(`Subject:"${subject}"`) : {}
     number ? queryParams.push(`Course_Number:${number}`) : {}
 
-    const query = `MATCH (course:Course {${queryParams.toString()}}) WHERE EXISTS {MATCH (course) <-[:SectionOf]- (:Section {term: 202520})} RETURN course`
+    const query = `MATCH (course:Course {${queryParams.toString()}}) WHERE EXISTS {MATCH (course) <-[:SectionOf]- (:Section {term: 202520})} RETURN course ORDER BY course.Course_Code`
     const response = await read(query)
 
     setCourses(response)
