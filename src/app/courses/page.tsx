@@ -20,8 +20,8 @@ export default function CourseList() {
   }, [])
 
   const queryData = async () => {
-    let getEnrolled = `MATCH (:Profile {CWID: "${user}"}) -[:Enrolled]-> (section:Section) RETURN section`
-    let getWaitlist = `MATCH (:Profile {CWID: "${user}"}) -[:Waitlist]-> (section:Section) RETURN section`
+    let getEnrolled = `MATCH (:Profile {CWID: "${user}"}) -[:Registered]-> (section:Section) RETURN section`
+    let getWaitlist = `MATCH (:Profile {CWID: "${user}"}) -[:Waitlisted]-> (section:Section) RETURN section`
 
     setEnrolled(await read(getEnrolled))
     setWaitlist(await read(getWaitlist))

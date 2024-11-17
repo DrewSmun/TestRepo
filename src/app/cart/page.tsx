@@ -20,7 +20,10 @@ export default function Cart() {
 
   const queryData = async () => {
     let getCart = `MATCH (:Profile {CWID: "${user}"}) -[:Cart]-> (section:Section) RETURN section`
-    setCart(await read(getCart))
+    let response = await read(getCart)
+
+    console.log(response)
+    setCart(response)
   }
 
   const register = (classes : Class[]) => {
