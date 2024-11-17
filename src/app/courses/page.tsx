@@ -23,8 +23,14 @@ export default function CourseList() {
     let getEnrolled = `MATCH (:Profile {CWID: "${user}"}) -[:Registered]-> (section:Section) RETURN section`
     let getWaitlist = `MATCH (:Profile {CWID: "${user}"}) -[:Waitlisted]-> (section:Section) RETURN section`
 
-    setEnrolled(await read(getEnrolled))
-    setWaitlist(await read(getWaitlist))
+    let response1 = await read(getEnrolled)
+    let response2 = await read(getWaitlist)
+
+    console.log(JSON.stringify(response1, null, 4))
+    console.log(JSON.stringify(response2, null, 4))
+
+    setEnrolled(response1)
+    setWaitlist(response2)
   }
   
   return (
