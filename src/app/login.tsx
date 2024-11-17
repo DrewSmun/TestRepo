@@ -22,8 +22,7 @@ export default function Login() {
 
     let query = `MATCH (profile:Profile {email: "${email}", password: "${password}"}) RETURN profile`
     let response = await read(query)
-
-    console.log(JSON.stringify(response, null, 4))
+    
     if (response.length > 0) {
       setUser(response[0].profile.properties.CWID)
       router.push('/welcome')
