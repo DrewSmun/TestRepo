@@ -23,10 +23,12 @@ export default function Login() {
     let query = `MATCH (profile:Profile {email: "${email}", password: "${password}"}) RETURN profile`
     let response = await read(query)
 
-    if (response.length) {
-      setUser(response[0].profile.properties.CWID)
-      router.push('/welcome')
-    }
+    console.log(response)
+
+    // if (response.length) {
+    //   setUser(response[0].profile.properties.CWID)
+    //   router.push('/welcome')
+    // }
 
     // const query = `MATCH (c:Profile) RETURN c;`
     // const neo4jData = await read(query)
@@ -48,7 +50,6 @@ export default function Login() {
     setUser("32480132")
     router.push('/welcome')
   }
-
 
   return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#E2E4EB] p-4">
