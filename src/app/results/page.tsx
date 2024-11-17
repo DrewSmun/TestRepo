@@ -145,10 +145,8 @@ export default function Results() {
     subject ? queryParams.push(`Subject:"${subject}"`) : {}
     number ? queryParams.push(`Course_Number:${number}`) : {}
 
-    const query = `MATCH (course:Course {${queryParams.toString()}}) WHERE EXISTS {MATCH (course) <-[:SectionOf]- (:Section {term: 202520})} RETURN course ORDER BY course.Course_Code`
-    const response = await read(query)
-
-    setCourses(response)
+    const getCourses = `MATCH (course:Course {${queryParams.toString()}}) WHERE EXISTS {MATCH (course) <-[:SectionOf]- (:Section {term: 202520})} RETURN course ORDER BY course.Course_Code`
+    setCourses(await read(getCourses))
   }
 
   return (

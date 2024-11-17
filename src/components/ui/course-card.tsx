@@ -17,7 +17,7 @@ interface CourseCardProps {
 export default function CourseCard({section, onTouch, modal, showHeader = false}: CourseCardProps) {
     const { user } = useUser()
     const [ added, setAdded ] = useState(false)
-    const [ full, setFull ] = useState(Math.random() < 0.5)
+    const [ full, setFull ] = useState(false)
 
     const [ code, setCode ] = useState('')
     const [ time, setTime ] = useState('')
@@ -53,7 +53,6 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
         let getFull = `MATCH (s:Section {id: ${section.id.low}}) RETURN s.seatsAvailable AS openSeats`
         let rspFull = await read(getFull)
 
-        
         setFull(rspFull[0].openSeats.low < 1)
     }
 
