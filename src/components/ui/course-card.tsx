@@ -153,8 +153,7 @@ export default function CourseCard({section, onTouch, modal, isAdded, showHeader
                     <div className="text-sm text-muted-foreground"> {section.courseTitle} </div>
                 </CardHeader>
             )}
-      
-      
+            
             <div className={`${classIsFull ? 'bg-orange-50' : 'bg-blue-50'} flex items-stretch gap-4 p-4 border-l-8 ${classIsFull ? "border-orange-500" : "border-blue-500"}`}>
                 {/* <div className="bg-blue-400 text-white flex items-center justify-center p-1"></div> */}
                 <div className="text-2xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {`${section.sequenceNumber.low}`.padStart(2, '0')} </div>
@@ -162,7 +161,7 @@ export default function CourseCard({section, onTouch, modal, isAdded, showHeader
                 <div className="flex-1 flex flex-col" onClick={onCardClick}>
                     <div className="flex justify-between items-start mb-2">
                         <div className=" border-gray-200 rounded-lg bg-white  p-1 wflex gap-2 text-sm mb-1">
-                            { section.days.map((day, index) => (<span key={index} className="text-xs"> {day} </span>)) }
+                            { days.map((day : string, index : number) => (<span key={index} className="text-xs"> {day} </span>)) }
                         </div>
                     
                         <div className=" border-gray-200 rounded-lg bg-white p-1 flex gap-1 text-sm mb-1"> {location} </div>
