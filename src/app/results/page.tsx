@@ -28,9 +28,11 @@ function CourseDropdown({course} : {course : any}) {
   }, [])
 
   const queryData = async () => {
-    const query = `MATCH (section:Section) -[:SectionOf]-> (:Course {Course_Code: ${course.Course_Code}}) RETURN section`
-    const response = await read(query)
+    let query = `MATCH (section:Section) -[:SectionOf]-> (:Course {Course_Code: ${course.Course_Code}}) RETURN section`
+    let response = await read(query)
 
+    console.log(course.Course_Code)
+    console.log(query)
     console.log(JSON.stringify(response, null, 4))
 
     setSections(response)
