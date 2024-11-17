@@ -26,7 +26,7 @@ export default function Login() {
     console.log(JSON.stringify(response, null, 4))
     if (response.length > 0) {
       setUser(response[0].profile.properties.CWID)
-      
+      router.push('/welcome')
     }
 
     // if (response.length) {
