@@ -48,12 +48,13 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
         let getAdded = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart'] AS added`
         let rspAdded = await read(getAdded)
 
-        setAdded(rspAdded[0].added)
+        setAdded(rspAdded[0] ? rspAdded[0].added : false)
 
-        let getFull = `MATCH (s:Section {id: ${section.id.low}}) RETURN s.seatsAvailable AS openSeats, s.maximumEnrollment AS maxSeats`
+        let getFull = `MATCH (s:Section {id: ${section.id.low}}) RETURN s.seatsAvailable AS openSeats`
         let rspFull = await read(getFull)
 
-        console.log(JSON.stringify(rspFull, null, 4))
+        
+        setFull(rspFull[0].openSeats.low < 1)
     }
 
     const addToCartNotif = () => toast.info('Added to cart!', {
@@ -82,16 +83,16 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     });
     
     const addToWaitlistNotif = () => toast.info('Added to waitlist!', {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          className: 'registered-notif',
-          style: { position: 'absolute', left: '15%', right: '25%', width:'calc(100vw - 40vw)',  backgroundColor: "#e85d0d"}
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        className: 'registered-notif',
+        style: { position: 'absolute', left: '15%', right: '25%', width:'calc(100vw - 40vw)',  backgroundColor: "#e85d0d"}
     });
 
     const timeConflictNotif = () => toast.error("Couldn't add seat: TIME CONFLICT", {
