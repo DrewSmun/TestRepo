@@ -44,6 +44,11 @@ export default function Login() {
     // })
   }
 
+  const handleSSO = () => {
+    setUser("32480132")
+    router.push('/welcome')
+  }
+
 
   return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#E2E4EB] p-4">
@@ -76,10 +81,11 @@ export default function Login() {
           </form>
 
           {/*This button is outside the form tag to prevent that you need email and password pop up*/}
-          <TransitionLink href={'welcome'} mode="left"><Button variant="default" className="w-full bg-[#BAC8F4] hover:bg-[#AABCF4] text-black font-bold mt-6"
-                  onClick={() => router.push('/welcome')}>
-            Sign in with SSO
-          </Button></TransitionLink>
+          <TransitionLink href={'welcome'} mode="left">
+            <Button variant="default" className="w-full bg-[#BAC8F4] hover:bg-[#AABCF4] text-black font-bold mt-6" onClick={handleSSO}>
+              Sign in with SSO
+            </Button>
+          </TransitionLink>
         </div>
       </div>
   )
