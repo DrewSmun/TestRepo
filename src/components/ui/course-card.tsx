@@ -68,7 +68,7 @@ export default function CourseCard({section, onTouch, showHeader, isAdded}: Cour
             )}
       
             <div className="flex items-stretch gap-4 p-4">
-                <div className="text-4xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {section.sequenceNumber.padStart(2, '0')} </div>
+                <div className="text-4xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {`${section.sequenceNumber}`.padStart(2, '0')} </div>
                 
                 <div className="flex-1 flex flex-col" onClick={onCardClick}>
                     <div className="flex justify-between items-start mb-2">
