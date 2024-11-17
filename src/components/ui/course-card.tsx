@@ -46,7 +46,9 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
 
     const queryData = async() => {
         let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart']`
-        setAdded(await read(query))
+        let response = await read(query)
+        
+        setAdded(response[0])
     }
 
     const addToCartNotif = () => toast.info('Added to cart!', {
