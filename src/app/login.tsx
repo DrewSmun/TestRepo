@@ -21,10 +21,9 @@ export default function Login() {
     e.preventDefault()
 
     let query = `MATCH (profile:Profile {email: "${email}", password: "${password}"}) RETURN profile`
-    console.log(query)
     let response = await read(query)
 
-    console.log(response)
+    console.log(JSON.stringify(response, null, 4))
 
     // if (response.length) {
     //   setUser(response[0].profile.properties.CWID)
