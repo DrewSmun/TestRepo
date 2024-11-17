@@ -68,7 +68,7 @@ export default function CourseCard({section, onTouch, showHeader, isAdded}: Cour
             )}
       
             <div className="flex items-stretch gap-4 p-4">
-                <div className="text-4xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {`${section.sequenceNumber}`.padStart(2, '0')} </div>
+                <div className="text-4xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {`${section.sequenceNumber.low}`.padStart(2, '0')} </div>
                 
                 <div className="flex-1 flex flex-col" onClick={onCardClick}>
                     <div className="flex justify-between items-start mb-2">
@@ -84,7 +84,7 @@ export default function CourseCard({section, onTouch, showHeader, isAdded}: Cour
                 </div>
 
                 <div className="flex flex-col justify-between items-end pl-4 border-l border-gray-200">
-                    <div className="text-sm text-right mb-2"> Seats Left <br /> {section.seatsAvailable}/{section.maximumEnrollment} </div>
+                    <div className="text-sm text-right mb-2"> Seats Left <br /> {section.seatsAvailable.low}/{section.maximumEnrollment.low} </div>
                     
                     <Button size="icon" className={`rounded-full w-10 h-10 ${added ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600'}`} onClick={onButtonClick}>
                         {added ? <Minus className="h-6 w-6"/> : <Plus className="h-6 w-6"/>}
