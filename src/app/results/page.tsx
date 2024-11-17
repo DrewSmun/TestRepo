@@ -28,13 +28,12 @@ function CourseDropdown({course} : {course : any}) {
   }, [])
 
   const queryData = async () => {
-    // console.log(JSON.stringify(course, null, 4))
-    // const query = `MATCH (section:Section)-[r:SectionOf]->(course:Course {Course_Code:${course.Course_Code}}) RETURN section`
-    // const response = await read(query)
+    const query = `MATCH (section:Section) -[:SectionOf]-> (:Course {Course_Code: ${course.Course_Code}}) RETURN section`
+    const response = await read(query)
 
-    // console.log(JSON.stringify(response, null, 4))
+    console.log(JSON.stringify(response, null, 4))
 
-    // setSections(response)
+    setSections(response)
   }
   
   const DisplayClassInfo = async (courseCode : String) => {
@@ -120,7 +119,7 @@ export default function Results() {
     subject ? queryParams.push(`Subject:"${subject}"`) : {}
     number ? queryParams.push(`Course_Number:${number}`) : {}
 
-    const query = `MATCH (course:Course {${queryParams.toString()}}) RETURN course`
+    const query = `MATCH (course:Course {${queryParams.toString()}}) WHERE EXISTS {MATCH (course) <-[:SectionOf]- (:Section {term: "202520"})} RETURN course`
     const response = await read(query)
 
     setCourses(response)
