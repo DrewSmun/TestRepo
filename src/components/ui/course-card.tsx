@@ -14,6 +14,12 @@ interface CourseCardProps {
     showHeader?: boolean
 }
 
+interface ColorProps {
+    header: string
+    background: string
+    border: string
+}
+
 const colorScheme = {
     blue: {
         header: "border-l-blue-500",
@@ -31,7 +37,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     const { user } = useUser()
     const [ added, setAdded ] = useState(false)
     const [ full, setFull ] = useState(false)
-    const [ colors, setColors ] = useState({}) 
+    const [ colors, setColors ] = useState<ColorProps>({header: '', background: '', border: ''})
     const [ buttonColor, setButtonColor ] = useState('')
 
     const [ code, setCode ] = useState('')
