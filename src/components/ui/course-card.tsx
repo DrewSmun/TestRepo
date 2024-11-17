@@ -5,19 +5,18 @@ import { Card, CardHeader } from "@/components/ui/card"
 import { Class, Course, Section } from "@/components/ui/data"
 import { useUser } from "@/components/meta/context"
 import { toast } from 'react-toastify'
-import { write } from '@/lib/neo4j'
+import { read, write } from '@/lib/neo4j'
 
 interface CourseCardProps {
     section: any
-    isAdded: boolean
     onTouch: (code : string) => void
     modal: (callback: () => void) => void
     showHeader?: boolean
 }
 
-export default function CourseCard({section, onTouch, modal, isAdded, showHeader = false}: CourseCardProps) {
+export default function CourseCard({section, onTouch, modal, showHeader = false}: CourseCardProps) {
     const { user } = useUser()
-    const [ added, setAdded ] = useState(isAdded)
+    const [ added, setAdded ] = useState(false)
     const [ classIsFull, setClassisFull ] = useState(Math.random() < 0.5)
 
     const [ code, setCode ] = useState('')
@@ -26,6 +25,7 @@ export default function CourseCard({section, onTouch, modal, isAdded, showHeader
     const [ location, setLocation ] = useState('')
     
     React.useEffect(() => {
+        queryData()
         setCode(`${section.subject} ${section.courseNumber}`)
         setLocation(`${section.building} ${section.room}`)
 
@@ -43,6 +43,11 @@ export default function CourseCard({section, onTouch, modal, isAdded, showHeader
         section.saturday  ? schedule.push("S") : {}
         setDays(schedule)
     }, [])
+
+    const queryData = async() => {
+        let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart']`
+        setAdded(await read(query))
+    }
 
     const addToCartNotif = () => toast.info('Added to cart!', {
         position: "top-right",
@@ -153,7 +158,7 @@ export default function CourseCard({section, onTouch, modal, isAdded, showHeader
                     <div className="text-sm text-muted-foreground"> {section.courseTitle} </div>
                 </CardHeader>
             )}
-            
+
             <div className={`${classIsFull ? 'bg-orange-50' : 'bg-blue-50'} flex items-stretch gap-4 p-4 border-l-8 ${classIsFull ? "border-orange-500" : "border-blue-500"}`}>
                 {/* <div className="bg-blue-400 text-white flex items-center justify-center p-1"></div> */}
                 <div className="text-2xl font-bold min-w-[3rem] flex items-center justify-center pr-4 border-r border-gray-200"> {`${section.sequenceNumber.low}`.padStart(2, '0')} </div>

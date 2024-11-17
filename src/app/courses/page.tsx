@@ -34,13 +34,13 @@ export default function CourseList() {
 
         <main className="p-4">
           {enrolled.map((section: any) => (
-            <CourseCard section={section.section.properties} onTouch={() => {}} showHeader={true} isAdded={true} modal={() => {throw new Error('Function not implemented.')}}/>
+            <CourseCard section={section.section.properties} onTouch={() => {}} showHeader={true} modal={() => {throw new Error('Function not implemented.')}}/>
           ))}
         </main>
 
         <main className="p-4">
           {waitlist.map((section: any) => (
-            <CourseCard section={section.section.properties} onTouch={() => {}} showHeader={true} isAdded={true} modal={() => {throw new Error('Function not implemented.')}}/>
+            <CourseCard section={section.section.properties} onTouch={() => {}} showHeader={true} modal={() => {throw new Error('Function not implemented.')}}/>
           ))}
         </main>
       </div>
