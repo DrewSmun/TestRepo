@@ -18,6 +18,7 @@ import * as React from "react";
 // const [infoCourse, setInfoCourse] = useState({})
 
 function CourseDropdown({course} : {course : any}) {
+  console.log("In Course Dropdown")
   const [isExpanded, setIsExpanded] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [infoCourse, setInfoCourse] = useState({})
