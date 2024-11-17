@@ -8,47 +8,39 @@ import { Class } from "@/components/ui/data"
 import PageTransition from '@/components/meta/page-transition'
 import Header from '@/components/ui/header'
 import { useUser } from "@/components/meta/context"
+import { read } from '@/lib/neo4j'
 
 export default function CourseList() {
   const { user } = useUser()
+  const [ enrolled, setEnrolled ] = useState<any[]>([])
+  const [ waitlist, setWaitlist ] = useState<any[]>([])
+
+  React.useEffect(() => {
+    queryData()
+  }, [])
+
+  const queryData = async () => {
+    let getEnrolled = `MATCH (:Profile {CWID: "${user}"}) -[:Enrolled]-> (section:Section) RETURN section`
+    let getWaitlist = `MATCH (:Profile {CWID: "${user}"}) -[:Waitlist]-> (section:Section) RETURN section`
+
+    setEnrolled(await read(getEnrolled))
+    setWaitlist(await read(getWaitlist))
+  }
   
   return (
     <PageTransition>
-      <div className="max-w-md mx-auto bg-gray-100 min-h-screen dyslexia-font">
-        <style jsx global>{` @font-face {
-          font-family: 'Dyslexia Font';
-          src: url('/Dyslexia_Font.ttf') format('truetype');
-          font-weight: normal;
-          font-style: normal;
-        }
-
-        .dyslexia-font {
-          font-family: 'Dyslexia Font', sans-serif;
-        } `}</style>
-
+      <div className="max-w-md mx-auto bg-gray-100 min-h-screen">
         <Header showShoppingCart={false} title="My Courses"/>
 
         <main className="p-4">
-          {user.enrolled.map((e: Class) => (
-              <CourseCard
-                  section={e.section}
-                  onTouch={() => {
-                  }}
-                  showHeader={true}
-                  isAdded={true}>
-              </CourseCard>
+          {enrolled.map((section: any) => (
+            <CourseCard section={section.section.properties} onTouch={() => {}} showHeader={true} isAdded={true} modal={() => {throw new Error('Function not implemented.')}}/>
           ))}
         </main>
 
         <main className="p-4">
-          {user.waitlist.map((e: Class) => (
-              <CourseCard
-                  section={e.section}
-                  onTouch={() => {
-                  }}
-                  showHeader={true}
-                  isAdded={true}>
-              </CourseCard>
+          {waitlist.map((section: any) => (
+            <CourseCard section={section.section.properties} onTouch={() => {}} showHeader={true} isAdded={true} modal={() => {throw new Error('Function not implemented.')}}/>
           ))}
         </main>
       </div>
