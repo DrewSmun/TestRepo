@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { ChevronLeft, ShoppingCart, ChevronDown, Plus } from 'lucide-react'
