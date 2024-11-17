@@ -25,8 +25,8 @@ export default function CourseCard({section, onTouch, showHeader, isAdded}: Cour
         setCode(`${section.subject} ${section.courseNumber}`)
         setLocation(`${section.building} ${section.room}`)
 
-        let startTime = new Date(0, 0, 0, section.beginTime.slice(0, 2), section.beginTime.slice(-2))
-        let endTime = new Date(0, 0, 0, section.endTime.slice(0, 2), section.endTime.slice(-2))
+        let startTime = new Date(0, 0, 0, ~~(section.beginTime.low / 100), (section.beginTime.low % 100))
+        let endTime = new Date(0, 0, 0, ~~(section.endTime.low / 100), (section.endTime.low % 100))
         setTime(`${startTime.toLocaleTimeString([], {hour: 'numeric', minute: 'numeric'})} - ${endTime.toLocaleTimeString([], {hour: 'numeric', minute: 'numeric'})}`)
 
         let schedule = []
