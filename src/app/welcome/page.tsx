@@ -50,15 +50,14 @@ const classData = [
 
 export default function Welcome() {
     const router = useRouter()
+    const [hasRegistrationHold] = useState(true)
     const [isOverlayOpen, setIsOverlayOpen] = useState(false)
     const [isOverlayOpenRegistrationDates, setIsOverlayOpenRegistrationDates] = useState(false)
-    const [hasRegistrationHold] = useState(true)
 
     const waitlistModalRef = React.useRef<ModalRef>(null)
     const holdModalRef = React.useRef<ModalRef>(null)
 
     const {user} = useUser()
-    console.log("In Welcome: " + user)
 
     const openWaitlistModal = () => {
         waitlistModalRef.current?.open()

@@ -45,10 +45,10 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     }, [])
 
     const queryData = async() => {
-        let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart']`
+        let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) RETURN TYPE(r) IN ['Registered', 'Waitlisted', 'Cart'] AS added`
         let response = await read(query)
         
-        console.log(response.length ? response[0] : false)
+        console.log(JSON.stringify(response, null, 4))
 
         // setAdded(response[0])
     }
