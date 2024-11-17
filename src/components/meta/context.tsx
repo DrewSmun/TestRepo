@@ -7,10 +7,10 @@ interface UserContextType {
     setUser: (user: string) => void
 }
 
-const UserContext = createContext<UserContextType>({user: "00000000", setUser: (defaultUser : string) => {}})
+const UserContext = createContext<UserContextType>({user: "", setUser: () => {}})
 
-export function UserProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<string>("00000000")
+export function UserProvider({ children } : { children: ReactNode }) {
+    const [user, setUser] = useState<string>("")
 
     return (
         <UserContext.Provider value={{ user, setUser }}>

@@ -27,13 +27,13 @@ export default function RootLayout({children} : Readonly<{children : React.React
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <LayoutClient>
-          <UserProvider>
+        <UserProvider>
+          <LayoutClient>
             <Suspense fallback={null}>
               {children}
             </Suspense>
-          </UserProvider>
-        </LayoutClient>
+          </LayoutClient>
+        </UserProvider>
       </body>
     </html>
   );
