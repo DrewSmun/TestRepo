@@ -33,6 +33,12 @@ const colorScheme = {
     }
 }
 
+const buttonColors = {
+    red: "bg-red-500 hover:bg-red-600",
+    orange: "bg-orange-500 hover:bg-orange-600",
+    blue: "bg-blue-500 hover:bg-blue-600",
+}
+
 export default function CourseCard({section, onTouch, modal, showHeader = false}: CourseCardProps) {
     const { user } = useUser()
     const [ added, setAdded ] = useState(false)
@@ -88,7 +94,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
             setColors(colorScheme.blue)
         }
 
-        setButtonColor(isAdded ? 'bg-red-500 hover:bg-red-600' : isFull ? 'bg-orange-500 hover:bg-orange-600' : 'bg-blue-500 hover:bg-blue-600')
+        setButtonColor(isAdded ? buttonColors.red : isFull ? buttonColors.orange : buttonColors.blue)
         setAdded(isAdded)
         setFull(isFull)
     }
@@ -152,9 +158,11 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
 
     const addSection = () => {
         let query = `MATCH (p:Profile {CWID: "${user}"}) MATCH (s:Section {id: ${section.id.low}}) CREATE (p) -[:Cart]-> (s)`
+        console.log(query)
         write(query)
 
         setAdded(true)
+        setButtonColor(buttonColors.red)
     }
 
     const removeSection = () => {
@@ -162,6 +170,7 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
         write(query)
 
         setAdded(false)
+        setButtonColor(full ? buttonColors.orange : buttonColors.blue)
     }
 
     const onButtonClick = () => {
