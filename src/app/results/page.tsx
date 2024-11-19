@@ -125,12 +125,10 @@ export default function Results() {
     let getCourses = 
     `MATCH (c:Course {${queryParams.join(", ")}}) <-[:SectionOf]- (s:Section)
      OPTIONAL MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s) 
-     RETURN c AS course, collect({section: s, status: TYPE(r)}) 
+     RETURN c AS course, collect({section: s, status: TYPE(r)}) AS sections
      ORDER BY c.CourseCode`
-    let results = await read(getCourses)
-    console.log(results)
 
-    setCourses(results)
+    setCourses(await read(getCourses))
   }
 
   return (
