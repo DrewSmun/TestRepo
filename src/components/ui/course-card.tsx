@@ -9,6 +9,7 @@ import { read, write } from '@/lib/neo4j'
 
 interface CourseCardProps {
     section: any
+    status: string
     onTouch: (code : string) => void
     modal: (callback: () => void) => void
     showHeader?: boolean
@@ -39,7 +40,7 @@ const buttonColors = {
     blue: "bg-blue-500 hover:bg-blue-600",
 }
 
-export default function CourseCard({section, onTouch, modal, showHeader = false}: CourseCardProps) {
+export default function CourseCard({section, status, onTouch, modal, showHeader = false}: CourseCardProps) {
     const { user } = useUser()
     const [ added, setAdded ] = useState(false)
     const [ full, setFull ] = useState(false)
@@ -52,7 +53,6 @@ export default function CourseCard({section, onTouch, modal, showHeader = false}
     const [ location, setLocation ] = useState('')
     
     React.useEffect(() => {
-        queryData()
         setCode(`${section.subject} ${section.courseNumber}`)
         setLocation(`${section.building} ${section.room}`)
 

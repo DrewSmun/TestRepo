@@ -11,11 +11,12 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Course, Section, Courses, Class, Account, Accounts } from "@/components/ui/data"
 import Header from "@/components/ui/header"
 import PageTransition from '@/components/meta/page-transition'
-import CourseInfoCard from '@/components/ui/course-info-card'
 import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom'
-import { read } from '@/lib/neo4j'
-import GoToCartFAB from '@/components/ui/cart-fab'
 import Modal, { ModalRef } from '@/components/meta/modal'
+import { useUser } from "@/components/meta/context"
+import CourseInfoCard from '@/components/ui/course-info-card'
+import GoToCartFAB from '@/components/ui/cart-fab'
+import { read } from '@/lib/neo4j'
 
 var classNumber = "TEST 101"
 var className = "Test Class"
@@ -26,37 +27,12 @@ var corequisites = "None"
 
 var confirmModalUp = false;
 
-function CourseDropdown({course} : {course : any}) {
+function CourseDropdown({course, sections}) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [infoCourse, setInfoCourse] = useState({})
-  const [sections, setSections] = useState<any[]>([])
-  
-  React.useEffect(() => {
-    queryData()
-  }, [])
-
-  const queryData = async () => {
-    let query = `MATCH (section:Section) -[:SectionOf]-> (:Course {Course_Code: "${course.Course_Code}"}) RETURN section`
-    let response = await read(query)
-
-    setSections(response)
-  }
 
   const DisplayClassInfo = async (courseCode : String) => {
-    //const query = "MATCH (c:Course {Course_Code: $CourseCode}) RETURN c.Course_Code as CourseCode, c.Course_Name as Name, c.Description as Desc, c.Prerequisites as Prereq, c.Prerequisites_And_Or_Corequisites as Precoreq, c.Corequisites as Coreq;"
-    
-    let query = `MATCH (c:Course {Course_Code: "${courseCode}"}) RETURN c;`
-    let results = await read(query)
-
-    setInfoCourse(results[0].c.properties)
-
-    // classNumber = neo4jData[0]["CourseCode"]
-    // className = neo4jData[0]["Name"]
-    // description = neo4jData[0]["Desc"]
-    // prerequisites = neo4jData[0]["Prereq"]
-    // corequisites = neo4jData[0]["Coreq"]
-    // console.log(classNumber)
     setIsOverlayOpen(true)
   }
 
@@ -112,9 +88,7 @@ function CourseDropdown({course} : {course : any}) {
         <CardContent className="px-2 pb-2">
           {isExpanded && (
             <div className="mt-4 space-y-4 mb-1">
-              {sections.map((section: any) => (
-                <CourseCard section={section.section.properties} onTouch={DisplayClassInfo} showHeader={false} modal={openModal}/>
-              ))}
+              {sections.map((sectionData) => (<CourseCard section={sectionData.section.properties} status={sectionData.status} onTouch={DisplayClassInfo} modal={openModal}/>))}
             </div>
           )}
         </CardContent>
@@ -134,6 +108,7 @@ export default function Results() {
   const subject = searchParams.get('subject')
   const number = searchParams.get('number')
 
+  const { user } = useUser()
   const [courses, setCourses] = useState<any[]>([])
 
   React.useEffect(() => {
@@ -145,11 +120,12 @@ export default function Results() {
     subject ? queryParams.push(`Subject:"${subject}"`) : null
     number ? queryParams.push(`Course_Number:"${number}"`) : null
 
-    let getCourses = `MATCH (c:Course {${queryParams.join(", ")}}) <-[:SectionOf]- (s:Section) RETURN c AS course, collect(s) AS sections ORDER BY c.CourseCode`
-    let response = await read(getCourses)
-
-    console.log(JSON.stringify(response, null, 2))
-    // setCourses(await read(getCourses))
+    let getCourses = 
+    `MATCH (c:Course {${queryParams.join(", ")}}) <-[:SectionOf]- (s:Section)
+     OPTIONAL MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s) 
+     RETURN c AS course, collect({section: s, status: TYPE(r)}) 
+     ORDER BY c.CourseCode`
+    setCourses(await read(getCourses))
   }
 
   return (
@@ -158,8 +134,7 @@ export default function Results() {
         <Header showShoppingCart={true} title="Search Results"/>
         
         <main className="p-4">
-          {/* {courses.map(() => (<CourseDropdown course/>))} */}
-          {/* {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))} */}
+          {courses.map(({course, sections}) => (<CourseDropdown course={course.properties} sections={sections}/>))}
         </main>
 
         <ToastContainer
