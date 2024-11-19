@@ -145,11 +145,11 @@ export default function Results() {
     subject ? queryParams.push(`Subject:"${subject}"`) : null
     number ? queryParams.push(`Course_Number:"${number}"`) : null
 
-    let testQuery = queryParams.join(", ")
-    console.log(testQuery)
+    let getCourses = `MATCH (c:Course {${queryParams.join(", ")}) <-[:SectionOf]- (s:Section) RETURN c AS course, collect(s) AS sections ORDER BY c.CourseCode`
+    let response = await read(getCourses)
 
-    const getCourses = `MATCH (course:Course {${queryParams.toString()}}) WHERE EXISTS {MATCH (course) <-[:SectionOf]- (:Section {term: 202520})} RETURN course ORDER BY course.Course_Code`
-    setCourses(await read(getCourses))
+    console.log(JSON.stringify(response, null, 2))
+    // setCourses(await read(getCourses))
   }
 
   return (
@@ -158,7 +158,8 @@ export default function Results() {
         <Header showShoppingCart={true} title="Search Results"/>
         
         <main className="p-4">
-          {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))}
+          {/* {courses.map(() => (<CourseDropdown course/>))} */}
+          {/* {courses.map((course : any) => (<CourseDropdown course={course.course.properties}/>))} */}
         </main>
 
         <ToastContainer
