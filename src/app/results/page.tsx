@@ -27,7 +27,7 @@ var corequisites = "None"
 
 var confirmModalUp = false;
 
-function CourseDropdown({course, sections}) {
+function CourseDropdown({course, sections} : {course: any, sections: any}) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [infoCourse, setInfoCourse] = useState({})
@@ -88,7 +88,7 @@ function CourseDropdown({course, sections}) {
         <CardContent className="px-2 pb-2">
           {isExpanded && (
             <div className="mt-4 space-y-4 mb-1">
-              {sections.map((sectionData) => (<CourseCard section={sectionData.section.properties} status={sectionData.status} onTouch={DisplayClassInfo} modal={openModal}/>))}
+              {sections.map((sectionData: any) => (<CourseCard section={sectionData.section.properties} status={sectionData.status} onTouch={DisplayClassInfo} modal={openModal}/>))}
             </div>
           )}
         </CardContent>
@@ -134,7 +134,7 @@ export default function Results() {
         <Header showShoppingCart={true} title="Search Results"/>
         
         <main className="p-4">
-          {courses.map(({course, sections}) => (<CourseDropdown course={course.properties} sections={sections}/>))}
+          {courses.map(({course, sections} : {course: any, sections: any}) => (<CourseDropdown course={course.properties} sections={sections}/>))}
         </main>
 
         <ToastContainer
