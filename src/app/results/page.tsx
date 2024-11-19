@@ -128,6 +128,7 @@ export default function Results() {
      RETURN c AS course, collect({section: s, status: TYPE(r)}) 
      ORDER BY c.CourseCode`
     let results = await read(getCourses)
+    
     setCourses(results)
   }
 
