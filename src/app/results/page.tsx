@@ -8,7 +8,6 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { Course, Section, Courses, Class, Account, Accounts } from "@/components/ui/data"
 import Header from "@/components/ui/header"
 import PageTransition from '@/components/meta/page-transition'
 import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom'
