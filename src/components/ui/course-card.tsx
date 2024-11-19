@@ -50,7 +50,7 @@ export default function CourseCard({section, status, onTouch, modal, showHeader 
     const [ added, setAdded ] = useState(status !== null)
     const [ full, setFull ] = useState(section.seatsAvailable < 1)
     const [ colors, setColors ] = useState<ColorProps>(getColors())
-    const [ buttonColor, setButtonColor ] = useState('')
+    const [ buttonColor, setButtonColor ] = useState(getButton())
 
     function getTime(beginTime: number, endTime: number) {
         let start = new Date(0, 0, 0, ~~(beginTime / 100), (beginTime % 100))
