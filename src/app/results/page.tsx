@@ -145,7 +145,7 @@ export default function Results() {
     subject ? queryParams.push(`Subject:"${subject}"`) : null
     number ? queryParams.push(`Course_Number:"${number}"`) : null
 
-    let getCourses = `MATCH (c:Course {${queryParams.join(", ")}) <-[:SectionOf]- (s:Section) RETURN c AS course, collect(s) AS sections ORDER BY c.CourseCode`
+    let getCourses = `MATCH (c:Course {${queryParams.join(", ")}}) <-[:SectionOf]- (s:Section) RETURN c AS course, collect(s) AS sections ORDER BY c.CourseCode`
     let response = await read(getCourses)
 
     console.log(JSON.stringify(response, null, 2))
