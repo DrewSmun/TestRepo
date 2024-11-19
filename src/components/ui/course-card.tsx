@@ -142,16 +142,15 @@ export default function CourseCard({section, status, onTouch, modal, showHeader 
         addToWaitlistNotif()
     }
 
-    const addSection = () => {
+    const addSection = async () => {
         let query = `MATCH (p:Profile {CWID: "${user}"}) MATCH (s:Section {id: ${section.id.low}}) CREATE (p) -[:Cart]-> (s)`
-        console.log(query)
         write(query)
 
         setAdded(true)
         setButtonColor(buttonColors.red)
     }
 
-    const removeSection = () => {
+    const removeSection = async () => {
         let query = `MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s:Section {id: ${section.id.low}}) DELETE r`
         write(query)
 

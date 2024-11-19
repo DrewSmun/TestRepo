@@ -25,11 +25,12 @@ export default function Cart() {
     setCart(response)
   }
 
-  const register = (classes : Class[]) => {
-    // for (var section in cart) {
-    //   let query = ``
-    //   write()
-    // }
+  const register = async () => {
+    let enroll = `MATCH (p:Profile {CWID: "${user}"}) -[r:Cart]-> (s:Section) WHERE s.seatsAvailable > 0 DELETE r CREATE (p) -[:Registered]-> (s)`
+    let waitlist = `MATCH (p:Profile {CWID: "${user}"}) -[r:Cart]-> (s:Section) WHERE s.seatsAvailable < 1 DELETE r CREATE (p) -[:Waitlisted]-> (s)`
+
+    await write(enroll)
+    await write(waitlist)
   }
 
   return (
@@ -39,7 +40,7 @@ export default function Cart() {
 
         <main className="p-4">
           {cart.map((section: any) => (
-            <CourseCard section={section.section.properties} status={"None"} onTouch={() => {}} showHeader={true} modal={() => {throw new Error('Function not implemented.')}}/>
+            <CourseCard section={section.section.properties} status={"Cart"} onTouch={() => {}} showHeader={true} modal={() => {throw new Error('Function not implemented.')}}/>
           ))}
 
           {cart.length == 0 && 
