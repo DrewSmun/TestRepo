@@ -41,6 +41,8 @@ const buttonColors = {
 }
 
 export default function CourseCard({section, status, onTouch, modal, showHeader = false}: CourseCardProps) {
+    console.log(JSON.stringify(section, null, 2))
+
     const code = `${section.subject} ${section.courseNumber}`
     const location = `${section.building} ${section.room}`
     const time = getTime(section.beginTime.low, section.endTime.low)
@@ -51,8 +53,6 @@ export default function CourseCard({section, status, onTouch, modal, showHeader 
     const [ full, setFull ] = useState(section.seatsAvailable < 1)
     const [ colors, setColors ] = useState<ColorProps>(getColors())
     const [ buttonColor, setButtonColor ] = useState(getButton())
-
-    console.log(JSON.stringify(section, null, 2))
 
     function getTime(beginTime: number, endTime: number) {
         let start = new Date(0, 0, 0, ~~(beginTime / 100), (beginTime % 100))
