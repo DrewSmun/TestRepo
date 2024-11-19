@@ -127,7 +127,8 @@ export default function Results() {
      OPTIONAL MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s) 
      RETURN c AS course, collect({section: s, status: TYPE(r)}) 
      ORDER BY c.CourseCode`
-    setCourses(await read(getCourses))
+    let results = await read(getCourses)
+    setCourses(results)
   }
 
   return (
