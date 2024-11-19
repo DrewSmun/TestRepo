@@ -32,6 +32,8 @@ function CourseDropdown({course, sections} : {course: any, sections: any}) {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [infoCourse, setInfoCourse] = useState({})
 
+  console.log(JSON.stringify(sections, null, 2))
+
   const DisplayClassInfo = async (courseCode : String) => {
     setIsOverlayOpen(true)
   }
