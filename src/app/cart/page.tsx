@@ -1,17 +1,19 @@
 'use client'
 
+import React, { useState } from "react";
+import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Class } from "@/components/ui/data"
 import { useUser } from "@/components/meta/context"
 import CourseCard from "@/components/ui/course-card"
 import Header from '@/components/ui/header'
 import PageTransition from '@/components/meta/page-transition'
-import React, { useState } from "react";
 import { TransitionLink } from "@/components/meta/transition-link"
 import { read, write } from '@/lib/neo4j'
 
 export default function Cart() {
   const { user } = useUser()
+  const router = useRouter()
   const [ cart, setCart ] = useState<any[]>([])
 
   React.useEffect(() => {
@@ -43,7 +45,7 @@ export default function Cart() {
             <CourseCard section={section.s.properties} status={"Cart"} onTouch={() => {}} showHeader={true} modal={() => {throw new Error('Function not implemented.')}}/>
           ))}
 
-          {cart.length == 0 && 
+          {!cart.length && 
             <div className = "justify-center items-center flex-col flex">
               <p className="mb-5">Your Course Cart is empty!</p>
 
@@ -54,6 +56,19 @@ export default function Cart() {
               </div>
             </div>
           }
+
+          {cart.length && (
+            <div className="p-4 bg-white border-t border-gray-200">
+              <div className="flex justify-between space-x-4">
+                <Button variant="outline" className="flex-1" onClick={() => {router.push('/schedule')}}>
+                  Schedule
+                </Button>
+                <Button className="flex-1" onClick={register}>
+                  Register
+                </Button>
+              </div>
+            </div>
+          )}
         </main>
       </div>
     </div>
