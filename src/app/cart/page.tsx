@@ -39,7 +39,7 @@ export default function Cart() {
 
         <main className="p-4">
           {cart.map((section: any) => (
-            <CourseCard section={section.section.properties} onTouch={() => {}} showHeader={true} modal={() => {throw new Error('Function not implemented.')}}/>
+            <CourseCard section={section.section.properties} status={"None"} onTouch={() => {}} showHeader={true} modal={() => {throw new Error('Function not implemented.')}}/>
           ))}
 
           {cart.length == 0 && 
