@@ -124,7 +124,7 @@ export default function Results() {
     `MATCH (c:Course {${queryParams.join(", ")}}) <-[:SectionOf]- (s:Section)
      OPTIONAL MATCH (p:Profile {CWID: "${user}"}) -[r]-> (s) 
      RETURN c AS course, collect({section: s, status: TYPE(r)}) AS sections
-     ORDER BY c.CourseCode`
+     ORDER BY c.Course_Code`
 
     setCourses(await read(getCourses))
   }
