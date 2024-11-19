@@ -142,11 +142,13 @@ export default function Results() {
 
   const queryData = async () => {
     let queryParams = []
-    subject ? queryParams.push(`Subject:"${subject}"`) : {}
-    number ? queryParams.push(`Course_Number:${number}`) : {}
+    subject ? queryParams.push(`Subject:"${subject}"`) : null
+    number ? queryParams.push(`Course_Number:"${number}"`) : null
+
+    let testQuery = queryParams.join(", ")
+    console.log(testQuery)
 
     const getCourses = `MATCH (course:Course {${queryParams.toString()}}) WHERE EXISTS {MATCH (course) <-[:SectionOf]- (:Section {term: 202520})} RETURN course ORDER BY course.Course_Code`
-    console.log(getCourses)
     setCourses(await read(getCourses))
   }
 
