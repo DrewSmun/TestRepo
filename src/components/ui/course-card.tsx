@@ -45,7 +45,8 @@ export default function CourseCard({section, status, onTouch, modal, showHeader 
 
     const code = `${section.subject} ${section.courseNumber}`
     const location = `${section.building} ${section.room}`
-    const time = section.instructionalMethod === "DE1" ? getTime(section.beginTime.low, section.endTime.low) : ""
+    const instructor = section.instructor ? section.instructor : "Instructor Not Yet Assigned"
+    const time = section.room ? getTime(section.beginTime.low, section.endTime.low) : ""
     const days = getDays()
 
     const { user } = useUser()
