@@ -27,7 +27,7 @@ export default function Cart() {
 
   // variable to test holds
   const [course, setCourse] = useState('')
-  const [coreq, setCoreq] = useState({})
+  const [coreq, setCoreq] = useState({Subject: '', Course_Name: '', Course_Number: ''})
   const [regHold, setRegHold] = useState(true)
 
   React.useEffect(() => {
@@ -90,7 +90,7 @@ export default function Cart() {
     coreqModalRef.current?.close()
 
     const transition = usePageTransition()
-    transition(router, `/results?subject=${coreq.subject}&number=${coreq.courseNumber}`, "left");
+    transition(router, `/results?subject=${coreq.Subject}&number=${coreq.Course_Number}`, "left");
   }
 
   function getTime(beginTime: number, endTime: number) {
@@ -232,7 +232,7 @@ export default function Cart() {
 
       <div className=" pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
         <Button onClick={closeCoreq} className="flex-1 border-2 border-primary hover:bg-primary/20 hover:text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2">
-          <b>SEARCH FOR {coreq}</b>
+          <b>SEARCH FOR {coreq.Course_Name}</b>
         </Button>
       </div>
     </Modal>
