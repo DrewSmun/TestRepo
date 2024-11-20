@@ -23,7 +23,8 @@ export default function Cart() {
   const [registeredClassData, setRegisteredClassData] = useState<{ className: any; sectionNumber: string; meetingTime: string; meetingLocation: string; professor: any }[]>([])
   const [waitlistedClassData, setWaitlistedClassData] = useState<{ className: any; sectionNumber: string; meetingTime: string; meetingLocation: string; professor: any }[]>([])
 
-  const [regHold, setRegHold] = useState(false)
+  // variable to test holds
+  const [regHold, setRegHold] = useState(true)
 
   React.useEffect(() => {
     queryData()
