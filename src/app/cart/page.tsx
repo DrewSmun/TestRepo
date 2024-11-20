@@ -189,7 +189,7 @@ export default function Cart() {
       </div>
 
       <div className=" pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
-        <Button onClick={closeHold} className="bg-blue-500 flex-1 border-2 border-primary hover:bg-blue-800 focus:ring-2 focus:ring-primary focus:ring-offset-2">
+        <Button onClick={closeHold} className="flex-1 border-2 border-primary hover:bg-primary/20 hover:text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2">
           <b>CONFIRM</b>
         </Button>
       </div>
