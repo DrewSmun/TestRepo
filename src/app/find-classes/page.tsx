@@ -32,18 +32,7 @@ export default function FindClasses() {
 
   return (
     // <PageTransition>
-      <div className="min-h-screen bg-blue-100 flex flex-col dyslexia-font">
-        <style jsx global>{` @font-face {
-          font-family: 'Dyslexia Font';
-          src: url('/Dyslexia_Font.ttf') format('truetype');
-          font-weight: normal;
-          font-style: normal;
-        }
-
-        .dyslexia-font {
-          font-family: 'Dyslexia Font', sans-serif;
-        } `}</style>
-
+      <div className="min-h-screen bg-blue-100 flex flex-col">
         <Header showShoppingCart={true} title="Find Classes"/>
         <main className="flex-grow flex flex-col">
           <div className="bg-white p-6 shadow-md">
@@ -74,7 +63,7 @@ export default function FindClasses() {
               />
             </div>
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 items-center justify-center mr-5">
               <input
                   type="checkbox"
                   id="moreOptions"
@@ -97,30 +86,30 @@ export default function FindClasses() {
                 className={`space-y-4 overflow-hidden transition-all duration-300 ease-in-out ${showMoreOptions ? 'max-h-80 opacity-100 mb-6' : 'max-h-0 opacity-0'}`}>
               <input
                   type="text"
-                  placeholder="Subject"
+                  placeholder="Subject (ex. 'BIOL')"
                   value={courseSubject}
                   onChange={(e) => setCourseSubject(e.target.value)}
                   className="w-full bg-white border border-gray-300 rounded-md py-2 px-4"
               />
               <input
                   type="text"
-                  placeholder="Course #"
+                  placeholder="Course # (ex. '101')"
                   value={courseNumber}
                   onChange={(e) => setCourseNumber(e.target.value)}
                   className="w-full bg-white border border-gray-300 rounded-md py-2 px-4"
               />
               <input
                   type="text"
-                  placeholder="CRN"
+                  placeholder="CRN (ex. 20235)"
                   value={crn}
                   onChange={(e) => setCrn(e.target.value)}
                   className="w-full bg-white border border-gray-300 rounded-md py-2 px-4"
               />
             </div>
 
-            <div className="mt-auto">
+            <div className="mt-auto mx-6">
               <button onClick={toResults}
-                      className="w-full bg-blue-200 text-blue-800 hover:bg-blue-300 text-lg py-6 rounded-full font-semibold transition-colors duration-200">
+                      className="w-full bg-blue-500 text-white active:bg-blue-800 hover:bg-blue-700 text-3xl p-4  rounded-full font-semibold transition-colors duration-200">
                 GO!
               </button>
             </div>

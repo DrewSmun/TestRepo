@@ -22,7 +22,7 @@ export default function Login() {
 
     let query = `MATCH (profile:Profile {email: "${email}", password: "${password}"}) RETURN profile`
     let response = await read(query)
-    
+
     if (response.length > 0) {
       setUser(response[0].profile.properties.CWID)
       router.push('/welcome')
@@ -43,20 +43,20 @@ export default function Login() {
 
           <form className="mt-8 space-y-6" onSubmit={handleLogin}>
             <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="bg-[#EBF4FA]"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="bg-[#EBF4FA]"
             />
             <Input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="bg-[#EBF4FA]"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              className="bg-[#EBF4FA]"
             />
 
             <Button type="submit" className="w-full bg-[#BAC8F4] hover:bg-[#AABCF4] text-black font-bold">

@@ -8,14 +8,15 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import CourseCard from "@/components/ui/course-card"
 import {ToastContainer, toast} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { Course, Section, Courses, Class, Account, Accounts } from "@/components/ui/data"
 import Header from "@/components/ui/header"
 import PageTransition from '@/components/meta/page-transition'
+import CourseInfoCard from '@/components/ui/course-info-card'
 import SlideInOverlay from '@/components/meta/slide-in-overlay-bottom'
+import { read } from '@/lib/neo4j'
+import GoToCartFAB from '@/components/ui/cart-fab' 
 import Modal, { ModalRef } from '@/components/meta/modal'
 import { useUser } from "@/components/meta/context"
-import CourseInfoCard from '@/components/ui/course-info-card'
-import GoToCartFAB from '@/components/ui/cart-fab'
-import { read } from '@/lib/neo4j'
 
 var classNumber = "TEST 101"
 var className = "Test Class"
@@ -30,6 +31,7 @@ function CourseDropdown({course, sections} : {course: any, sections: any}) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [isOverlayOpen, setIsOverlayOpen] = useState(false)
   const [infoCourse, setInfoCourse] = useState({})
+
 
   const DisplayClassInfo = async (courseCode : String) => {
     setIsOverlayOpen(true)
@@ -54,6 +56,17 @@ function CourseDropdown({course, sections} : {course: any, sections: any}) {
   }
   const modalRef = React.useRef<ModalRef>(null)
 
+  const prereqModalRef = React.useRef<ModalRef>(null)
+  let [preReqString, updatePreReqString] = useState("")
+
+  const openPrereqModal = (string: string) => {
+    updatePreReqString(string)
+    prereqModalRef.current?.open()
+  }
+  const closePrereqModal = () => {
+    prereqModalRef.current?.close()
+  }
+  console.log(course)
   return (
     <div>
       <Modal ref={modalRef} variant="waitlist" title="This section is full!">
@@ -71,9 +84,23 @@ function CourseDropdown({course, sections} : {course: any, sections: any}) {
           </Button>
         </div>
       </Modal>
+
+      <Modal
+          title="MISSING PREREQUISITES"
+          variant = "destructive"
+          ref={prereqModalRef}>
+          <div className = "pb-5 pl-5 pr-5" style={{textAlign: "left"}}>
+            <p>{preReqString}</p>
+          </div>
+          <div className=" pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
+            <Button variant="outline" onClick={closePrereqModal} className="font-bold flex-1 border-2 text-white border-primary hover:text-white hover:bg-red-700 focus:ring-2 focus:ring-primary active:bg-red-800 focus:ring-offset-2  ml-20 mr-20 hover:ml-25 bg-red-600">
+              OK
+            </Button>
+          </div>
+      </Modal>
       
-      <Card className="mb-4 bg-white">
-        <CardHeader className="p-4 flex flex-row items-center justify-between">
+      <Card  className="mb-4 bg-white">
+        <CardHeader onClick={() => setIsExpanded(!isExpanded)} className="p-4 flex flex-row items-center justify-between">
           <div className="flex flex-col">
             <CardTitle className="text-lg font-bold"> {course.Course_Code} </CardTitle>
             <div className="text-sm text-muted-foreground"> {course.Course_Name} </div>
@@ -87,16 +114,15 @@ function CourseDropdown({course, sections} : {course: any, sections: any}) {
         <CardContent className="px-2 pb-2">
           {isExpanded && (
             <div className="mt-4 space-y-4 mb-1">
-              {sections.map((sectionData: any) => (<CourseCard section={sectionData.section.properties} status={sectionData.status} onTouch={DisplayClassInfo} modal={openModal}/>))}
+              {sections.map((sectionData: any) => (<CourseCard section={sectionData.section.properties} status={sectionData.status} onTouch={() => {DisplayClassInfo}} modal={openModal} modal2={openPrereqModal} dropModal={()=>{return false}}/>))}
             </div>
           )}
         </CardContent>
       </Card>
 
       {/* TODO Implement Chex's Generic Popup System */}
-      <SlideInOverlay title={"CLASS TITLE"} isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(false)}>
-        <CourseInfoCard classNumber={"TEST 123-01"} crn={"12345"} description={"All told, the decision to acquire InfoWars was an easy one for the Global Tetrahedron executive board. Founded in 1999 on the heels of the Satanic “panic” and growing steadily ever since, InfoWars has distinguished itself as an invaluable tool for brainwashing and controlling the masses. With a shrewd mix of delusional paranoia and dubious anti-aging nutrition hacks, they strive to make life both scarier and longer for everyone, a commendable goal. They are a true unicorn, capable of simultaneously inspiring public support for billionaires and stoking outrage at an inept federal state that can assassinate JFK but can’t even put a man on the Moon."}
-                        prerequisites={"Test"} corequisites={"Test"}/>
+      <SlideInOverlay title={course.Course_Name} isOpen={isOverlayOpen} onClose={() => setIsOverlayOpen(false)}>
+        <CourseInfoCard classNumber={course.Course_Code} description={course.Description} className={course.Course_Name} prerequisites={course.Prerequisites} corequisites= {course.Corequisites}/>
       </SlideInOverlay>
     </div>
   )
@@ -109,10 +135,14 @@ export default function Results() {
 
   const { user } = useUser()
   const [courses, setCourses] = useState<any[]>([])
-
+  
   React.useEffect(() => {
-    queryData();
+    loadingNotif(queryData());
   }, []);
+
+  const loadingNotif = ((promise: Promise<unknown> | (() => Promise<unknown>)) => toast.promise(promise, {
+    pending: "Loading",
+  }))
 
   const queryData = async () => {
     let queryParams = []

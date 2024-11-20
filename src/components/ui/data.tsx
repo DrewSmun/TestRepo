@@ -1,3 +1,5 @@
+import { Integer } from "neo4j-driver"
+
 export type Account = {
     CWID: string
     name: string
@@ -9,6 +11,8 @@ export type Account = {
     enrolled: Class[]
     waitlist: Class[]
     taken: Class[]
+    hours: Number
+    image: string
 }
 
 export type Course = {
@@ -48,7 +52,9 @@ export const defaultAccount = {
     cart: [],
     enrolled: [],
     waitlist: [],
-    taken: []
+    taken: [],
+    hours: 0,
+    image: "/lilguy.svg"
 }
 
 export const Accounts: Account[] = [
@@ -63,6 +69,8 @@ export const Accounts: Account[] = [
         enrolled: [],
         waitlist: [],
         taken: [],
+        hours: 0,
+        image: "/lilguy.svg"
     }
 ]
 
@@ -194,7 +202,7 @@ export const Courses: Course[] = [
         number: "614",
         title: "Advanced Operating Systems",
         description: "This course covers a broad range of advanced operating systems concepts.",
-        prereqs: [],
+        prereqs: ["CSIS 604"],
         coreqs: [],
         sections: [{
             id: "01",

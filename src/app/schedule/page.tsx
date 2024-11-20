@@ -1,42 +1,57 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronLeft, ChevronDown } from 'lucide-react'
+import {ChevronDown, X} from 'lucide-react'
 import Header from '@/components/ui/header'
-import PageTransition from '@/components/meta/page-transition'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import * as React from "react";
 
 interface ClassBlock {
   id: string
-  name: string
+  courseCode: string
+  courseName: string
+  section: number
+  instructor: string
   room: string
+  days: number[]
   startTime: string
   endTime: string
-  days: number[]
+  classType: string
+  credits: number
+  description: string
   isWaitlisted?: boolean
 }
 
-// TODO Try to have the nav stay at the top
-// TODO Pop up with more info on the class
 export default function Component() {
-  // TODO Possibly add more data to be shown in the class block and make it clickable for more details.
   const classes: ClassBlock[] = [
     {
       id: "1",
-      name: "CSCI 220",
+      courseCode: "CSCI 220",
+      courseName: "Computer Programming I",
+      section: 2,
+      instructor: "RoxAnn Stalvey",
       room: "HWEA 302",
-      startTime: "09:55",
-      endTime: "11:10",
       days: [1, 3], // Tuesday and Thursday
+      startTime: "08:30",
+      endTime: "09:45",
+      classType: "Lecture",
+      credits: 3,
+      description: "An introduction to programming and problem solving. Topics include data types, variables, assignment, control structures (selection and iteration), lists, functions, classes, and an introduction to object-oriented programming. Lectures three hours per week.",
       isWaitlisted: true
     },
     {
       id: "2",
-      name: "CSIS 690",
+      courseCode: "CSIS 690",
+      courseName: "ST: Data Dependent Digital Forensics",
+      section: 1,
+      instructor: "Kris Ghosh",
       room: "HWEA 300",
+      days: [1], // Tuesday only
       startTime: "17:30",
       endTime: "20:15",
-      days: [1], // Tuesday only
+      classType: "Lecture",
+      credits: 3,
+      description: "A course in the special study of an advanced or new topic in computer science, information science or software engineering.",
       isWaitlisted: false
     },
   ]
@@ -47,6 +62,7 @@ export default function Component() {
 
   const [selectedSemester, setSelectedSemester] = useState(semesters[0])
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [selectedClass, setSelectedClass] = useState<ClassBlock | null>(null)
 
   const getGridPosition = (time: string) => {
     const [hours, minutes] = time.split(":").map(Number)
@@ -59,26 +75,29 @@ export default function Component() {
     return end - start
   }
 
+  const formatTime = (time: string) => {
+    const [hours, minutes] = time.split(":").map(Number)
+    const period = hours >= 12 ? 'PM' : 'AM'
+    const formattedHours = hours % 12 || 12
+    return `${formattedHours}:${minutes.toString().padStart(2, '0')} ${period}`
+  }
+
+  // Might use for the class block on the schedule grid due to text cut off on smaller screens
+  const formatTimeNoAM_PM = (time: string) => {
+    const [hours, minutes] = time.split(":").map(Number)
+    const formattedHours = hours % 12 || 12
+    return `${formattedHours}:${minutes.toString().padStart(2, '0')}`
+  }
+
   return (
-      <PageTransition>
-        {/*Little Nav Bar*/}
-        <div className="dyslexia-font">
-          <style jsx global>{` @font-face {
-                font-family: 'Dyslexia Font';
-                src: url('/Dyslexia_Font.ttf') format('truetype');
-                font-weight: normal;
-                font-style: normal;
-            }
-
-            .dyslexia-font {
-                font-family: 'Dyslexia Font', sans-serif;
-            } `}</style>
-
-          <Header showShoppingCart={false} title="My Schedule"/>
-          <div className="max-w-4xl mx-auto p-4 bg-[#E3E9FA]">
+      <div className="max-h-screen overflow-auto">
+        {/* Nav bar with dropdown and the days of the week header */}
+        <div className="max-w-4xl mx-auto">
+          <div className="sticky top-0 z-50 bg-[#E3E9FA]">
+            <Header showShoppingCart={false} title="My Schedule"/>
 
             {/*Drop Down*/}
-            <div className="relative mb-4">
+            <div className="relative px-2 py-2">
               <button
                   className="w-full bg-white p-2 rounded-md flex justify-between items-center"
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
@@ -106,28 +125,35 @@ export default function Component() {
             </div>
             {/*Drop Down END*/}
 
+            {/********** Days of the week header **********/}
+            <div className="pt-1 grid grid-cols-[auto_repeat(5,1fr)] border-none bg-transparent text-sm">
+              <div className="px-8 bg-[#E3E9FA]"/>
+              {/* That little rectangle in front of Monday block header,
+                TODO Need to work on figuring out alignment, it's not quite perfect. Buuutt hiding the boarder makes it look good */}
+              {days.map((day) => (
+                  <div key={day} className="p-2 text-center font-bold bg-[#E3E9FA]">
+                    {day}
+                  </div>
+              ))}
+            </div>
+            {/* Days of the week header END */}
+          </div>
+          {/* Nav bar with dropdown and the days of the week header END */}
+
+          {/*The colored area underneath the grid and dropdown*/}
+          <div className="max-w-4xl mx-auto p-2 bg-[#E3E9FA] rounded-b">
+
             {/************ SCHEDULE ************/}
             <div className="flex-1 overflow-hidden">
-              <div className="grid grid-cols-[auto_repeat(5,1fr)] border-b bg-transparent text-sm">
-                {/********** Days of the week header **********/}
-                <div className="p-5"/>
-                {/* That little rectangle in front of Monday block header,
-                TODO Need to work on figuring out alignment, it's not quite perfect. Buuutt hiding the boarder makes it look good */}
-                {days.map((day) => (
-                    <div key={day} className="p-2 text-center font-bold bg-transparent">
-                      {day}
-                    </div>
-                ))}
-              </div>
 
               {/* Schedule Grid */}
-              <div className="relative grid grid-cols-[auto_repeat(5,1fr)] overflow-auto bg-white">
+              <div className="relative grid grid-cols-[auto_repeat(5,1fr)] overflow-auto bg-white rounded">
 
                 {/* Hours Column */}
                 <div className="sticky left-0 bg-white">
+                  {/*Changing the style and classNames only effects the time column,*/}
+                  {/*does not affect the rest of the grid.*/}
                   {hours.map((hour) => (
-                      // Changing the style and class names only effects the time column,
-                      // does not affect the rest of the grid.
                       <div
                           key={hour}
                           className="border-b px-1.5 py-5 text-sm"
@@ -139,10 +165,9 @@ export default function Component() {
                   ))}
                 </div>
 
-                {/* To change the class block to match the size of the grid, you gotta do some math
-                and change sizes in multiple places in the grid.
+                {/* To change the class block to match the size of the grid, you have to
+                change sizes in multiple areas in the schedule grid.
                 Such as the time grid, the whole grid for the blocks, and the class blocks*/}
-                {/* TODO Figure that out later */}
                 {Array.from({length: 5}, (_, dayIndex) => (
                     <div key={dayIndex} className="relative border-l">
                       {classes
@@ -153,7 +178,7 @@ export default function Component() {
                             return (
                                 <div
                                     key={cls.id}
-                                    className="absolute left-0 right-0 border-2 border-purple-800 bg-purple-300 p-2 text-xs font-bold flex-col"
+                                    className="absolute left-0 right-0 border-2 rounded border-purple-800 bg-purple-300 p-1 text-[9px] font-bold flex flex-col justify-center items-center cursor-pointer overflow-hidden"
                                     style={{
                                       top: `${top}px`,
                                       height: `${height}px`,
@@ -161,12 +186,13 @@ export default function Component() {
                                       borderStyle: cls.isWaitlisted ? "dashed" : "solid",
                                       background: cls.isWaitlisted ? "rgba(243 232 255)" : "rgba(216 180 254)"
                                     }}
+                                    onClick={() => setSelectedClass(cls)}
                                 >
-                                  {/*<div className="font-bold">*/}
-                                  <div>{cls.name}</div>
-                                  <div>{cls.room}</div>
-                                  {/*<div>{cls.startTime}-{cls.endTime}</div>*/}
-                                  {/*</div>*/}
+                                  <div className="font-light text-center">
+                                    <div>{cls.courseCode}</div>
+                                    <div>{cls.room}</div>
+                                    <div>{formatTime(cls.startTime)} - {formatTime(cls.endTime)}</div>
+                                  </div>
                                 </div>
                             )
                           })}
@@ -183,6 +209,35 @@ export default function Component() {
             </div>
           </div>
         </div>
-      </PageTransition>
+
+        {/* Class Information Popup */}
+        <Dialog open={!!selectedClass} onOpenChange={() => setSelectedClass(null)}>
+          <DialogContent className="text-black">
+            <button
+                onClick={() => setSelectedClass(null)}
+                className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+            >
+              <X className="h-4 w-4" />
+              <span className="sr-only">Close</span>
+            </button>
+
+            <DialogHeader className="text-left">
+              <DialogTitle>{selectedClass?.courseCode || 'Class Details'}</DialogTitle>
+            </DialogHeader>
+            <div className="h-px bg-gray-400 my-2" />
+            <div className="mt-2 space-y-2">
+              <div><strong>Course Name:</strong> {selectedClass?.courseName || 'N/A'}</div>
+              <div><strong>Section:</strong> {selectedClass?.section || 'N/A'}</div>
+              <div><strong>Instructor:</strong> {selectedClass?.instructor || 'N/A'}</div>
+              <div><strong>Room:</strong> {selectedClass?.room || 'N/A'}</div>
+              <div><strong>Days:</strong> {selectedClass?.days.map(day => days[day]).join(', ') || 'N/A'}</div>
+              <div><strong>Time:</strong> {selectedClass && `${formatTime(selectedClass.startTime)} - ${formatTime(selectedClass.endTime)}` || 'N/A'}</div>
+              <div><strong>Class Type:</strong> {selectedClass?.classType || 'N/A'}</div>
+              <div><strong>Credits:</strong> {selectedClass?.credits || 'N/A'}</div>
+              <div><strong>Description:</strong> {selectedClass?.description || 'No description available.'}</div>
+            </div>
+          </DialogContent>
+        </Dialog>
+      </div>
   )
 }

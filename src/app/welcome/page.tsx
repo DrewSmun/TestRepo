@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { useRouter } from 'next/navigation'
 import { UserCircle } from "lucide-react"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Image from 'next/image'
 import { Card, CardContent } from "@/components/ui/card"
 import PageTransition from '../../components/meta/page-transition'
@@ -49,15 +49,62 @@ const classData = [
 ]
 
 export default function Welcome() {
+    const { user } = useUser()
     const router = useRouter()
-    const [hasRegistrationHold] = useState(true)
+    const [cartCount, setCartCount] = useState(0)
+  
+     
     const [isOverlayOpen, setIsOverlayOpen] = useState(false)
     const [isOverlayOpenRegistrationDates, setIsOverlayOpenRegistrationDates] = useState(false)
+    const [hasRegistrationHold, setRegistrationHold] = useState(false)
+    const [profile, setProfile] = useState<any>({name: '', rank: '', CWID: '', image: '', major: [''], holdNotification: false, waitlistNotif: false})
+    const [registrationDate, setRegistrationDate] = useState<string>('')
 
     const waitlistModalRef = React.useRef<ModalRef>(null)
     const holdModalRef = React.useRef<ModalRef>(null)
 
-    const {user} = useUser()
+    React.useEffect(() => {
+        queryData()
+    }, [])
+
+    const queryData = async () => {
+        let getCart = `MATCH (p:Profile {CWID: "${user}"}) RETURN p`
+        let response = await read(getCart)
+        setProfile(response[0].p.properties)
+
+        console.log(JSON.stringify(response, null, 2))
+
+        let hours = response[0].p.properties.hours.low
+        let rank = response[0].p.properties.rank
+
+        if(hours >= 90 || rank == 'Graduate') {
+            setRegistrationDate("October 29")
+        }
+        else if(hours >= 75) {
+            setRegistrationDate("October 31")
+        }
+        else if(hours >= 60) {
+            setRegistrationDate("November 1")
+        }
+        else if(hours >= 50) {
+            setRegistrationDate("November 7")
+        }
+        else if(hours >= 40) {
+            setRegistrationDate("November 8")
+        }
+        else if(hours >= 30) {
+            setRegistrationDate("November 11")
+        }
+        else if(hours >= 20) {
+            setRegistrationDate("November 12")
+        }
+        else if(hours >= 1) {
+            setRegistrationDate("November 13")
+        }
+        else {
+            setRegistrationDate("November 14")
+        }
+    }
 
     const openWaitlistModal = () => {
         waitlistModalRef.current?.open()
@@ -72,17 +119,16 @@ export default function Welcome() {
     const closeHoldModal = () => {
         holdModalRef.current?.close()
     }
-
     return (
         <div className="max-h-screen overflow-auto overflow-hidden">
-            {hasRegistrationHold && 
+            {profile.holdNotification && 
                 <Modal
                     trigger={<a> <HoldBanner onClick={handleBannerClick} subheading="Academic Advising - Tap for more info"/> </a>}
                     title="REGISTRATION HOLD"
                     variant = "destructive"
                     ref={holdModalRef}>
 
-                <div className = "pb-0 pl-3 pr-3 font-black" style={{textAlign: "center"}}> Academic Advising </div>
+                <div className = "pt-1 pl-3 pr-3 pb-4 font-black" style={{textAlign: "center"}}> Academic Advising </div>
                 <div className = "pb-5 pl-5 pr-5" style={{textAlign: "left"}}>
                     You have an advisory hold placed on your account. This hold must be lifted before you can register for classes. 
                     <p className="mt-3 font-bold"> To have your hold lifted, please contact your advisor or department. </p>
@@ -99,10 +145,10 @@ export default function Welcome() {
                 </div>
             </Modal>}
 
-            <Modal title="Waitlist Seat Granted" variant = "waitlist" defaultOpen ref={waitlistModalRef}>
+            <Modal title="Waitlist Seat Granted" variant = "waitlist" defaultOpen = {profile.waitlistNotif} ref={waitlistModalRef}>
                 <div className = "pb-0 pl-7 pr-7" style={{textAlign: "left"}}>
-                    <p className="text-center font-black text-lg pb-4"> Good news! </p> Seats you waitlisted for in <br/>
-                    <p className="font-black pt-2 ml-6 mr-20">the following sections(s) have been reserved for you:</p>
+                    <p className="text-center font-black text-lg pt-2 pb-6"> Good news! </p> Seats you waitlisted for in <br/>
+                    <p className="font-black pt-2 ml-6 pb-4 mr-20">the following sections(s) have been reserved for you:</p>
                 </div>
 
                 <hr className="mx-5" />
@@ -124,7 +170,7 @@ export default function Welcome() {
                     ))}
                 </div>
 
-                <div className=" pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
+                <div className=" mt-6 pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
                     <Button variant="outline" onClick={closeWaitlistModal} className="flex-1 border-2 border-primary hover:bg-primary/20 hover:text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2">
                         BACK TO HOME
                     </Button>
@@ -140,7 +186,7 @@ export default function Welcome() {
                     <div className="ml-6 mr-6"><button className="w-full mx-auto text-center mt-6 bg-gray-100 p-1 rounded-xl">
                         <div onClick={() => setIsOverlayOpenRegistrationDates(true)}>
                             <p className="text-gray-600 text-base">You can register for classes on</p>
-                            <p className="text-black font-bold text-xl">OCTOBER 29</p>
+                            <p className="text-black font-bold text-xl">{registrationDate}</p>
                         </div>
                     </button></div>
 
@@ -185,8 +231,8 @@ export default function Welcome() {
 
                 {/* Move slide in overlay into  */}
                 <SlideInOverlay isOpen={isOverlayOpen} title="Student Profile" onClose={() => setIsOverlayOpen(false)}>
-                    <StudentProfileCard name="Regilax" studentId="346143" classLevel="Junior" avatarUrl="/lilguy.svg"
-                                        programOfStudy="Computer Science B.S."></StudentProfileCard>
+                    <StudentProfileCard name={profile.name} studentId={profile.CWID} classLevel={profile.rank} avatarUrl={profile.image}
+                                        programOfStudy={profile.major[0]}></StudentProfileCard>
                 </SlideInOverlay>
 
                 <SlideInOverlay isOpen={isOverlayOpenRegistrationDates} title="Registration Dates" onClose={() => setIsOverlayOpenRegistrationDates(false)}>
