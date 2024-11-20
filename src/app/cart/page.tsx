@@ -11,6 +11,7 @@ import Modal, { ModalRef } from "@/components/meta/modal"
 import { read, write } from '@/lib/neo4j'
 import { Card, CardContent } from "@/components/ui/card"
 import { ToastContainer } from "react-toastify"
+import { usePageTransition } from '@/components/meta/transition-link'
 
 
 export default function Cart() {
@@ -20,10 +21,13 @@ export default function Cart() {
   const modalRef = React.useRef<ModalRef>(null)
   const successModalRef = React.useRef<ModalRef>(null)
   const holdModalRef = React.useRef<ModalRef>(null)
+  const coreqModalRef = React.useRef<ModalRef>(null)
   const [registeredClassData, setRegisteredClassData] = useState<{ className: any; sectionNumber: string; meetingTime: string; meetingLocation: string; professor: any }[]>([])
   const [waitlistedClassData, setWaitlistedClassData] = useState<{ className: any; sectionNumber: string; meetingTime: string; meetingLocation: string; professor: any }[]>([])
 
   // variable to test holds
+  const [course, setCourse] = useState('')
+  const [coreq, setCoreq] = useState('')
   const [regHold, setRegHold] = useState(true)
 
   React.useEffect(() => {
@@ -78,16 +82,42 @@ export default function Cart() {
     holdModalRef.current?.close()
   }
 
+  const openCoreq = () => {
+    coreqModalRef.current?.open()
+  }
+
+  const closeCoreq = () => {
+    coreqModalRef.current?.close()
+
+    const transition = usePageTransition()
+    transition(router, `/results?subject=${coreq.subject}&number=${coreq.courseNumber}`, "left");
+  }
+
   function getTime(beginTime: number, endTime: number) {
     let start = new Date(0, 0, 0, ~~(beginTime / 100), (beginTime % 100))
     let end = new Date(0, 0, 0, ~~(endTime / 100), (endTime % 100))
     return `${start.toLocaleTimeString([], {hour: 'numeric', minute: 'numeric'})} - ${end.toLocaleTimeString([], {hour: 'numeric', minute: 'numeric'})}`
   }
 
-  const attemptSubmit = () => {
+  const attemptSubmit = async () => {
     if (regHold) {
       openHold()
+      return
     }
+    
+    for (const section of cart) {
+      let query = `MATCH (:Section {id: ${section.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
+      let response = await read(query)
+
+      if (response > 0) {
+        setCourse(`${section.courseTitle}`)
+        setCoreq(response[0].c.properties)
+        openCoreq()
+        return
+      }
+    }
+
+    openModal()
   }
 
   const register = async () => {
@@ -102,7 +132,6 @@ export default function Cart() {
   }
   
   return (
-    <>
     <div className="max-h-[calc(100vh-70px)] overflow-scroll">
 
     <Modal ref={modalRef} variant="info" title="Are you sure?">
@@ -191,6 +220,18 @@ export default function Cart() {
       <div className=" pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
         <Button onClick={closeHold} className="flex-1 border-2 border-primary hover:bg-primary/20 hover:text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2">
           <b>CONFIRM</b>
+        </Button>
+      </div>
+    </Modal>
+
+    <Modal ref={coreqModalRef} variant="destructive" title="Registration Hold">
+      <div className = "pb-5 pl-5 pr-5" style={{textAlign: "left"}}>
+        {course} requires {coreq.Course_Name} to be taken as a corequisite. Please add this course to your cart.
+      </div>
+
+      <div className=" pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
+        <Button onClick={closeCoreq} className="flex-1 border-2 border-primary hover:bg-primary/20 hover:text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2">
+          <b>SEARCH FOR {coreq}</b>
         </Button>
       </div>
     </Modal>
