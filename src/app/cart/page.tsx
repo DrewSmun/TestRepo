@@ -182,7 +182,7 @@ export default function Cart() {
               </div>
     </Modal>
 
-    <Modal ref={holdModalRef} variant="info" title="Registration Hold">
+    <Modal ref={holdModalRef} variant="destructive" title="Registration Hold">
       <div className = "pb-5 pl-5 pr-5" style={{textAlign: "left"}}>
         You have a registration hold placed on your account. This hold must be lifted before you can register for classes. 
         <p className="mt-3 font-bold"> To have your hold lifted, please contact your advisor or department. </p>
