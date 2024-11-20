@@ -132,6 +132,7 @@ export default function Cart() {
   }
   
   return (
+    <>
     <div className="max-h-[calc(100vh-70px)] overflow-scroll">
 
     <Modal ref={modalRef} variant="info" title="Are you sure?">
