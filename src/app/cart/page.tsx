@@ -111,6 +111,7 @@ export default function Cart() {
       let response = await read(query)
       let response2 = await read(query2)
 
+      console.log(query2)
       console.log(JSON.stringify(response2, null, 4))
 
       if (response.length > 0) {
