@@ -100,7 +100,7 @@ export default function Cart() {
   }
 
   const attemptSubmit = async () => {
-    let query = `MATCH (p:Profile {CWID: ${user}}) RETURN p.holdNotification`
+    let query = `MATCH (p:Profile {CWID: "${user}"}) RETURN p.holdNotification`
     let response = await read(query)
 
     console.log(query)
