@@ -109,7 +109,7 @@ export default function Cart() {
       let query = `MATCH (:Section {id: ${section.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
       let response = await read(query)
 
-      if (response > 0) {
+      if (response.length > 0) {
         setCourse(`${section.courseTitle}`)
         setCoreq(response[0].c.properties)
         openCoreq()
