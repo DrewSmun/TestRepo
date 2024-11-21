@@ -109,7 +109,7 @@ export default function Cart() {
       let query = `MATCH (:Section {id: ${section.s.properties.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
       let query2 = `MATCH (:Profile {CWID: ${user}}) -[:Taken]-> (c:Course) RETURN collect(c.Course_Code) AS taken`
       let response = await read(query)
-      let response2 = await read(query)
+      let response2 = await read(query2)
 
       console.log(JSON.stringify(response2, null, 4))
 
