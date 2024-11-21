@@ -27,7 +27,7 @@ export default function Cart() {
 
   // variable to test holds
   const [course, setCourse] = useState('')
-  const [coreq, setCoreq] = useState({Subject: '', Course_Name: '', Course_Number: ''})
+  const [coreq, setCoreq] = useState({Subject: '', Course_Name: '', Course_Code: '', Course_Number: ''})
   const [regHold, setRegHold] = useState(false)
 
   React.useEffect(() => {
