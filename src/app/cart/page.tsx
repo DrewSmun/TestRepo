@@ -103,6 +103,8 @@ export default function Cart() {
     let query = `MATCH (p:Profile {CWID: ${user}}) RETURN p.holdNotification`
     let response = await read(query)
 
+    console.log(JSON.stringify(response, null, 4))
+
     if (response[0].hold) {
       openHold()
       return
