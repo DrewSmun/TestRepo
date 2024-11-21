@@ -114,7 +114,7 @@ export default function Cart() {
       console.log(query2)
       console.log(JSON.stringify(response2, null, 4))
 
-      if (response.length > 0 && !cart.includes(response[0].c.properties.Course_Code)) {
+      if (response.length > 0 && !cart.includes(section.c.properties.Course_Code)) {
         setCourse(`${section.s.properties.courseTitle}`)
         setCoreq(response[0].c.properties)
         openCoreq()
