@@ -107,9 +107,15 @@ export default function Cart() {
 
     for (const section of cart) {
       let query = `MATCH (:Section {id: ${section.s.properties.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
+      let query2 = `MATCH (:Profile {CWID: ${user}}) -[:Taken]-> (c:Course) RETURN collect(c.Course_Code) AS taken`
       let response = await read(query)
+      let response2 = await read(query)
+
+      console.log(response2)
 
       if (response.length > 0) {
+
+        
         setCourse(`${section.s.properties.courseTitle}`)
         setCoreq(response[0].c.properties)
         openCoreq()
