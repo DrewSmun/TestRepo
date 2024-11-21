@@ -156,6 +156,7 @@ export default function Results() {
      ORDER BY c.Course_Code`
 
     setCourses(await read(getCourses))
+    console.log(getCourses)
   }
 
   return (
