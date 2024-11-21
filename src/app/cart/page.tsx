@@ -105,7 +105,9 @@ export default function Cart() {
       return
     }
     
+    console.log(cart)
     for (const section of cart) {
+      console.log(section)
       let query = `MATCH (:Section {id: ${section.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
       let response = await read(query)
 
