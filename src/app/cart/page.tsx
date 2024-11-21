@@ -88,6 +88,7 @@ export default function Cart() {
   const closeCoreq = () => {
     coreqModalRef.current?.close()
 
+    console.log(coreq)
     const transition = usePageTransition()
     transition(router, `/results?subject=${coreq.Subject}&number=${coreq.Course_Number}`, "left");
   }
@@ -103,7 +104,7 @@ export default function Cart() {
       openHold()
       return
     }
-    
+
     for (const section of cart) {
       let query = `MATCH (:Section {id: ${section.s.properties.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
       let response = await read(query)
@@ -231,7 +232,7 @@ export default function Cart() {
 
       <div className=" pl-5 pr-5 pb-5 flex flex-row justify-between space-x-2">
         <Button onClick={closeCoreq} className="flex-1 border-2 border-primary hover:bg-primary/20 hover:text-primary focus:ring-2 focus:ring-primary focus:ring-offset-2">
-          <b>SEARCH FOR {coreq.Course_Name}</b>
+          <b>SEARCH FOR {coreq.Course_Code}</b>
         </Button>
       </div>
     </Modal>
