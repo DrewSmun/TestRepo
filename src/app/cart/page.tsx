@@ -107,7 +107,7 @@ export default function Cart() {
 
     for (const section of cart) {
       let query = `MATCH (:Section {id: ${section.s.properties.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
-      let query2 = `MATCH (:Profile {CWID: "${user}"}) -[:Cart]-> (c:Course) RETURN collect(c.Course_Code) AS cart`
+      let query2 = `MATCH (:Profile {CWID: "${user}"}) -[:Cart]-> (:Section) -[]-> (c:Course) RETURN collect(c.Course_Code) AS cart`
       let response = await read(query)
       let response2 = await read(query2)
 
