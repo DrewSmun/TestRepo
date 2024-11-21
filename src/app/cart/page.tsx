@@ -39,7 +39,6 @@ export default function Cart() {
     let response = await read(getCart)
 
     setCart(response)
-    console.log(response)
   }
 
   const openModal = () => {
@@ -105,14 +104,12 @@ export default function Cart() {
       return
     }
     
-    console.log(cart)
     for (const section of cart) {
-      console.log(section)
-      let query = `MATCH (:Section {id: ${section.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
+      let query = `MATCH (:Section {id: ${section.s.properties.id.low}}) -[]-> (:Course) -[:Corequisite]-> (c:Course) RETURN c`
       let response = await read(query)
 
       if (response.length > 0) {
-        setCourse(`${section.courseTitle}`)
+        setCourse(`${section.s.properties.courseTitle}`)
         setCoreq(response[0].c.properties)
         openCoreq()
         return
